@@ -2008,7 +2008,7 @@ var Rihla = (() => {
     "src/store.cjs"(exports, module) {
       "use strict";
       init_gas_timers();
-      var TABLES = ["settings", "definitions", "companies", "users", "pricings", "offers", "assignments", "quotes", "sessions", "attempts", "requests", "audit"];
+      var TABLES = ["settings", "definitions", "companies", "users", "pricings", "offers", "assignments", "quotes", "companyPricings", "sessions", "attempts", "requests", "audit"];
       var clone = (value) => JSON.parse(JSON.stringify(value));
       var UnitOfWork = class {
         constructor(data, now, id) {
@@ -2071,7 +2071,7 @@ var Rihla = (() => {
       var { AppError, fail, number, integer, text, money, currency, totalsByCurrency, calculateProgram, calculateService, quoteLine } = require_pricing();
       var { TABLES, clone } = require_store();
       var PERMISSIONS = ["viewCost", "editDefinitions", "editPricing", "approve", "publish", "manageCompanies", "manageUsers", "export"];
-      var MUTATIONS = /* @__PURE__ */ new Set(["definition.save", "definition.import", "company.save", "user.save", "pricing.save", "offer.save", "offer.approve", "offer.archive", "publish.commit", "quote.save", "quote.archive", "settings.save", "account.password"]);
+      var MUTATIONS = /* @__PURE__ */ new Set(["definition.save", "definition.import", "company.save", "user.save", "pricing.save", "offer.save", "offer.approve", "offer.archive", "publish.commit", "quote.save", "quote.archive", "settings.save", "account.password", "company.pricing.save", "company.pricing.archive", "assignment.toggle"]);
       var safeUser = (u) => ({ id: u.id, name: u.name, username: u.username, role: u.role, companyId: u.companyId || "", permissions: u.permissions || [], active: u.active, mustChange: !!u.mustChange, version: u.version });
       var permission = (u, p) => u.role === "admin" || u.role === "employee" && (u.permissions || []).includes(p);
       function requirePermission(u, p) {
@@ -2197,6 +2197,24 @@ var Rihla = (() => {
           const result = kind === "program" ? calculateProgram(input, rooms, services) : calculateService(input, service);
           return { kind, input, roomIds: selected, serviceId: kind === "service" ? p.serviceId : "", definitionsSnapshot: kind === "service" ? [service] : [...rooms, ...services.filter((s) => (input.serviceIds || []).includes(s.id))], result };
         }
+        function ownedCompanyPricing(tx, u, id) {
+          const row = requireRow(tx, "companyPricings", id);
+          if (row.companyId !== u.companyId) fail("FORBIDDEN", "\u0647\u0630\u0627 \u0627\u0644\u062D\u0633\u0627\u0628 \u0644\u0627 \u064A\u062E\u0635 \u0634\u0631\u0643\u062A\u0643");
+          return row;
+        }
+        function calculateCompany(p) {
+          const input = clone(p.input || {});
+          if (JSON.stringify(input).length > 14e3) fail("VALIDATION", "\u062A\u0641\u0627\u0635\u064A\u0644 \u0627\u0644\u062A\u0633\u0639\u064A\u0631 \u0623\u0643\u0628\u0631 \u0645\u0646 \u0627\u0644\u062D\u062F \u0627\u0644\u0645\u0633\u0645\u0648\u062D");
+          const kind = p.kind === "service" ? "service" : "program";
+          if (kind === "program") {
+            const rooms = (Array.isArray(p.rooms) ? p.rooms : []).slice(0, 50).map((r) => ({ id: r.id || crypto2.id(), name: text(r.name, "\u0627\u0633\u0645 \u0627\u0644\u063A\u0631\u0641\u0629", 200, true), occupancy: integer(r.occupancy, "\u0639\u062F\u062F \u0627\u0644\u0623\u0634\u062E\u0627\u0635", 1, 20), extraBeds: r.extraBeds === "" || r.extraBeds == null ? void 0 : integer(r.extraBeds, "\u0627\u0644\u0623\u0633\u0631\u0651\u0629 \u0627\u0644\u0625\u0636\u0627\u0641\u064A\u0629", 0, 20) }));
+            const result2 = calculateProgram(input, rooms, []);
+            return { kind, input, rooms, result: result2 };
+          }
+          const service = { id: "service", name: text(p.service?.name, "\u0627\u0633\u0645 \u0627\u0644\u062E\u062F\u0645\u0629", 200, true), cost: number(p.service?.cost, "\u0627\u0644\u062A\u0643\u0644\u0641\u0629"), currency: currency(p.service?.currency || "LYD"), saleCurrency: currency(p.service?.saleCurrency || "LYD"), unit: text(p.service?.unit, "\u0627\u0644\u0648\u062D\u062F\u0629", 60) || "item", active: true };
+          const result = calculateService(input, service);
+          return { kind, input, service, result };
+        }
         function publication(tx, u, p) {
           requirePermission(u, "publish");
           const offer = requireRow(tx, "offers", p.offerId);
@@ -2267,7 +2285,8 @@ var Rihla = (() => {
               const a = tx.get("assignments", l.assignmentId);
               return !a || !a.active || a.version !== l.source.assignmentVersion || tx.get("offers", a.offerId)?.archived;
             }) }));
-            return { user: safeUser(u), company: { id: company.id, name: company.name, contact: company.contact }, settings: { name: settings.name }, assignments, quotes };
+            const companyPricings = tx.all("companyPricings").filter((x) => x.companyId === u.companyId);
+            return { user: safeUser(u), company: { id: company.id, name: company.name, contact: company.contact }, settings: { name: settings.name }, assignments, quotes, companyPricings };
           }
           const viewCost = permission(u, "viewCost");
           const result = { user: safeUser(u), settings: { id: settings.id, name: settings.name, version: settings.version }, offers: tx.all("offers").map((o) => publicOffer(o, viewCost)) };
@@ -2381,6 +2400,12 @@ var Rihla = (() => {
               version(o, p.version);
               return publicOffer(tx.put("offers", { ...o, archived: p.archived !== false }), permission(u, "viewCost"));
             }
+            case "assignment.toggle": {
+              requirePermission(u, "publish");
+              const row = requireRow(tx, "assignments", p.id);
+              version(row, p.version);
+              return tx.put("assignments", { ...row, active: p.active !== false });
+            }
             case "publish.preview":
               return publication(tx, u, p);
             case "publish.commit": {
@@ -2413,6 +2438,22 @@ var Rihla = (() => {
             case "export.quote": {
               const q = ownedQuote(tx, u, p.id);
               return { id: q.id, name: q.name, customer: q.customer, notes: q.notes, validUntil: q.validUntil, company: tx.get("companies", u.companyId).name, currency: q.currency, total: q.total, totals: (q.totals || [{ currency: q.currency || "LYD", total: q.total }]).map((t) => ({ currency: t.currency, total: t.total })), kind: "quote", lines: q.lines.map((l) => ({ label: l.label, offerName: l.source.offerName, unit: l.unit, currency: l.currency || "LYD", quantity: l.quantity, nights: l.nights, units: l.units, sellUnit: l.sellUnit, total: l.total })) };
+            }
+            case "company.pricing.calculate": {
+              if (u.role !== "company") fail("FORBIDDEN", "\u0623\u062F\u0627\u0629 \u0627\u0644\u062A\u0633\u0639\u064A\u0631 \u0627\u0644\u062E\u0627\u0635\u0629 \u062A\u062E\u0635 \u062D\u0633\u0627\u0628\u0627\u062A \u0627\u0644\u0634\u0631\u0643\u0627\u062A");
+              return calculateCompany(p);
+            }
+            case "company.pricing.save": {
+              if (u.role !== "company") fail("FORBIDDEN", "\u0623\u062F\u0627\u0629 \u0627\u0644\u062A\u0633\u0639\u064A\u0631 \u0627\u0644\u062E\u0627\u0635\u0629 \u062A\u062E\u0635 \u062D\u0633\u0627\u0628\u0627\u062A \u0627\u0644\u0634\u0631\u0643\u0627\u062A");
+              const old = p.id ? ownedCompanyPricing(tx, u, p.id) : null;
+              version(old, p.version);
+              return tx.put("companyPricings", { id: old?.id || crypto2.id(), companyId: u.companyId, name: text(p.name, "\u0627\u0633\u0645 \u0627\u0644\u062A\u0633\u0639\u064A\u0631", 200, true), notes: text(p.notes, "\u0627\u0644\u0645\u0644\u0627\u062D\u0638\u0627\u062A", 5e3), archived: old?.archived || false, ...calculateCompany(p) });
+            }
+            case "company.pricing.archive": {
+              if (u.role !== "company") fail("FORBIDDEN", "\u0623\u062F\u0627\u0629 \u0627\u0644\u062A\u0633\u0639\u064A\u0631 \u0627\u0644\u062E\u0627\u0635\u0629 \u062A\u062E\u0635 \u062D\u0633\u0627\u0628\u0627\u062A \u0627\u0644\u0634\u0631\u0643\u0627\u062A");
+              const row = ownedCompanyPricing(tx, u, p.id);
+              version(row, p.version);
+              return tx.put("companyPricings", { ...row, archived: p.archived !== false });
             }
             case "settings.save": {
               if (u.role !== "admin") fail("FORBIDDEN", "\u0627\u0644\u0625\u0639\u062F\u0627\u062F\u0627\u062A \u062A\u062E\u0635 \u0627\u0644\u0645\u0633\u0624\u0648\u0644");

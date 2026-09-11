@@ -1,5 +1,12 @@
-/* Only doGet and api are browser-callable; privileged helpers end in _. */
+/* Only doGet, doPost, and api are browser-callable; privileged helpers end in _. */
 function doGet() {return HtmlService.createHtmlOutputFromFile('Index').setTitle('رحلة | التسعير والعروض').addMetaTag('viewport','width=device-width, initial-scale=1');}
+// Lets an externally hosted front end (e.g. GitHub Pages) call this same /exec URL as a JSON API.
+function doPost(e) {
+  var result;
+  try {result=api(JSON.parse(e.postData.contents));}
+  catch(err){result={ok:false,error:{code:'VALIDATION',message:'طلب غير صالح.'}};}
+  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+}
 function api(request) {
   try {var result=app_().handle(request);if(result.ok && request.action==='backup.create')result.data=createBackup_(request.requestId);return result;}
   catch(e){console.error('RIHLA_SERVER',String(e.message).slice(0,300));return {ok:false,error:{code:'SERVER',message:'تعذر الوصول إلى البيانات. راجع إعداد المنظومة أو أعد المحاولة.'}};}
@@ -29,6 +36,24 @@ function createBackup_(requestId){
   finally {lock.releaseLock();}
 }
 function nightlyMaintenance_(){app_().cleanup();createBackup_();}
+/* Run once from the editor after updating the code, whenever Rihla.TABLES gains a new entry
+   (e.g. companyPricings). Safe to re-run any time: only adds sheets that don't exist yet,
+   never touches or removes existing data. */
+function addMissingTables_(){
+  var props=PropertiesService.getScriptProperties(),dbId=props.getProperty('DATABASE_ID');
+  if(!dbId) throw Error('Run setup_ first.');
+  var db=SpreadsheetApp.openById(dbId),existing={};
+  db.getSheets().forEach(function(s){existing[s.getName()]=true;});
+  var added=[];
+  Rihla.TABLES.forEach(function(t){
+    if(existing[t]) return;
+    var s=db.insertSheet(t);
+    s.getRange(1,1,1,4).setValues([['id','version','updatedAt','data']]).setFontWeight('bold');
+    s.setFrozenRows(1);s.getRange('A:D').setNumberFormat('@');
+    added.push(t);
+  });
+  console.log(added.length?('Added sheets: '+added.join(', ')):'Nothing to add, all tables already exist.');
+}
 function verifyInstallation_(){var snapshot=new SheetsStore_().read_();Rihla.validateSnapshot(snapshot.data);var start=Date.now(),c=crypto_(),hash=c.hash('installation-check-only-2026');if(!c.verify('installation-check-only-2026',hash))throw Error('Password verification failed');console.log(JSON.stringify({schema:'OK',passwordCheck:'OK',passwordMilliseconds:Date.now()-start,tables:Rihla.TABLES.length}));}
 function restoreBackup_(){
   var props=PropertiesService.getScriptProperties(),backupId=props.getProperty('RESTORE_BACKUP_ID');if(!backupId)throw Error('Set RESTORE_BACKUP_ID first.');
