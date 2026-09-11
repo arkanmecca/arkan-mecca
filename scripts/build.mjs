@@ -7,7 +7,7 @@ await fs.mkdir(path.join(root,'dist/gas'),{recursive:true});
 await fs.mkdir(path.join(root,'dist/web'),{recursive:true});
 const server=await build({entryPoints:[path.join(root,'src/server-entry.cjs')],bundle:true,write:false,platform:'neutral',format:'iife',globalName:'Rihla',target:'es2020',alias:{crypto:path.join(root,'src/crypto-gas.cjs')},inject:[path.join(root,'src/gas-timers.js')],minify:false});
 await fs.writeFile(path.join(root,'dist/gas/Server.gs'),server.outputFiles[0].text);
-const browser=await build({entryPoints:[path.join(root,'src/client.js')],bundle:true,write:false,platform:'browser',format:'iife',target:'es2020',minify:true,alias:{exceljs:'exceljs/dist/exceljs.min.js'},legalComments:'inline'});
+const browser=await build({entryPoints:[path.join(root,'src/client.js')],bundle:true,write:false,platform:'browser',format:'iife',target:'es2020',supported:{'template-literal':false},minify:true,alias:{exceljs:'exceljs/dist/exceljs.min.js'},legalComments:'none'});
 const logo='data:image/png;base64,'+(await fs.readFile(path.join(root,'src/assets/rihla-logo.png'))).toString('base64');
 const styles=(await fs.readFile(path.join(root,'src/styles.css'),'utf8')).replaceAll('__RIHLA_LOGO__',logo);
 const html=(await fs.readFile(path.join(root,'src/index.html'),'utf8')).replace('/* STYLES */',styles).replace('/* CLIENT */',()=>browser.outputFiles[0].text.replace(/<\/script/gi,'<\\/script'));
