@@ -1,0 +1,7 @@
+{
+  "name": "rihla-pricing", "version": "1.0.0", "private": true,
+  "description": "Independent Arabic travel pricing portal for Google Apps Script",
+  "scripts": {"build":"node scripts/build.mjs", "test":"node --test test/*.test.cjs", "dev":"node scripts/dev.cjs"},
+  "dependencies": {"bcryptjs":"3.0.3", "exceljs":"4.4.0"},
+  "devDependencies": {"esbuild":"0.25.12", "@playwright/test":"1.56.1"}
+}

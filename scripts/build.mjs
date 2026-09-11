@@ -1,0 +1,15 @@
+import {build} from 'esbuild';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+await fs.mkdir(path.join(root,'dist/gas'),{recursive:true});
+await fs.mkdir(path.join(root,'dist/web'),{recursive:true});
+const server=await build({entryPoints:[path.join(root,'src/server-entry.cjs')],bundle:true,write:false,platform:'neutral',format:'iife',globalName:'Rihla',target:'es2020',alias:{crypto:path.join(root,'src/crypto-gas.cjs')},inject:[path.join(root,'src/gas-timers.js')],minify:false});
+await fs.writeFile(path.join(root,'dist/gas/Server.gs'),server.outputFiles[0].text);
+const browser=await build({entryPoints:[path.join(root,'src/client.js')],bundle:true,write:false,platform:'browser',format:'iife',target:'es2020',minify:true,alias:{exceljs:'exceljs/dist/exceljs.min.js'},legalComments:'inline'});
+const html=(await fs.readFile(path.join(root,'src/index.html'),'utf8')).replace('/* STYLES */',await fs.readFile(path.join(root,'src/styles.css'),'utf8')).replace('/* CLIENT */',()=>browser.outputFiles[0].text.replace(/<\/script/gi,'<\\/script'));
+await fs.writeFile(path.join(root,'dist/gas/Index.html'),html);
+await fs.writeFile(path.join(root,'dist/web/index.html'),html);
+for(const name of await fs.readdir(path.join(root,'gas')))await fs.copyFile(path.join(root,'gas',name),path.join(root,'dist/gas',name));
+console.log('Built Apps Script package and local test interface. HTML '+Math.round(Buffer.byteLength(html)/1024)+' KB.');
