@@ -1,5 +1,5 @@
 /* Only doGet and api are browser-callable; privileged helpers end in _. */
-function doGet() {return HtmlService.createHtmlOutputFromFile('Index').setTitle('رحلة | التسعير والعروض').addMetaTag('viewport','width=device-width, initial-scale=1').setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);}
+function doGet() {return HtmlService.createHtmlOutputFromFile('Index').setTitle('رحلة | التسعير والعروض').addMetaTag('viewport','width=device-width, initial-scale=1');}
 function api(request) {
   try {var result=app_().handle(request);if(result.ok && request.action==='backup.create')result.data=createBackup_(request.requestId);return result;}
   catch(e){console.error('RIHLA_SERVER',String(e.message).slice(0,300));return {ok:false,error:{code:'SERVER',message:'تعذر الوصول إلى البيانات. راجع إعداد المنظومة أو أعد المحاولة.'}};}
