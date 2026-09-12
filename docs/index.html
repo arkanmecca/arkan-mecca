@@ -1328,6 +1328,140 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
  .calculation-table td:last-child{padding:12px}
  .sidebar{padding-top:0}
 }
+
+/* ===== Release 2 — offers toolbar, view switch, pricing workspace, quote builder ===== */
+.toolbar{align-items:center}
+.toolbar-main{display:flex;align-items:center;gap:10px;flex:1;min-width:240px}
+.toolbar .search-field{flex:1;min-width:0;margin:0}
+.toolbar label.search-field{font-size:0}
+.toolbar label.search-field input{font-size:1rem}
+.filter-fields{align-items:center;gap:10px}
+.filter-fields label{display:flex;flex-direction:row;align-items:center;gap:7px;min-width:0;flex:0 1 auto;font-size:.8rem;color:var(--muted)}
+.filter-fields label select{width:auto;min-width:118px;max-width:190px;padding-block:9px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-size:.82rem;font-weight:500;color:var(--muted);min-height:38px;cursor:pointer}
+.chip:hover{border-color:#c9b7be;background:#f8f2f4}
+.chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+.chip:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.filter-clear{margin-inline-start:auto;background:transparent;border:0;color:var(--red);font-weight:500;font-size:.84rem;min-height:38px;padding:0 6px;cursor:pointer;text-decoration:underline}
+.filter-clear:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.filter-count{background:var(--gold);color:#fff;border-radius:999px;padding:1px 8px;font-size:.72rem;margin-inline-start:6px}
+.view-switch{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex:none}
+.view-switch button{border:0;background:#fff;color:var(--muted);padding:8px 14px;font-size:.82rem;font-weight:500;min-height:38px;cursor:pointer}
+.view-switch button+button{border-inline-start:1px solid var(--line)}
+.view-switch button[aria-pressed="true"]{background:var(--teal-soft);color:var(--teal);font-weight:700}
+.view-switch button:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.offer-grid{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
+.offer-card h2{font-size:1.08rem;margin:5px 0 2px}
+.offer-card-head{padding:16px 18px 13px}
+.offer-trip{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:700;color:#6c4f8a;background:#f2edf7;border-radius:999px;padding:3px 10px}
+.offer-from{padding:13px 18px;display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px solid #f1ecef}
+.offer-from small{color:var(--muted);font-size:.79rem}
+.offer-from .price-value{font-size:1.45rem;color:var(--teal);white-space:nowrap}
+.price-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px;padding:13px 18px}
+.price-tile{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fcfafb;min-width:0}
+.price-tile b{display:block;font-size:.78rem;font-weight:500;color:var(--muted);overflow-wrap:anywhere}
+.price-tile .num{font-size:1.02rem;font-weight:800;color:var(--ink)}
+.price-tile small{display:block;font-size:.7rem;color:var(--muted);margin-top:2px}
+.offer-card .details-toggle{padding:0 18px 13px}
+.offer-card .details-toggle>summary{font-size:.83rem;color:var(--teal);font-weight:500}
+.offer-card .details-toggle .table-wrap{margin-top:10px;border:1px solid var(--line);border-radius:10px}
+.compare-wrap{border:1px solid var(--line);border-radius:12px;background:#fff;overflow-x:auto}
+.compare-table{width:100%;min-width:640px}
+.compare-table th{background:#f7f4f6;position:sticky;top:0;z-index:1}
+.compare-table td{font-size:.92rem;white-space:nowrap}
+.compare-table td.room-cell{text-align:center}
+.compare-table td.room-cell.empty-cell{color:#c3b6bc}
+.compare-table .table-title{font-weight:700}
+.compare-table tr.archived-row td:first-child{opacity:.72}
+.compare-group{padding:16px 2px 8px;font-size:.9rem;font-weight:700;color:var(--teal)}
+.value-switch{display:inline-flex;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.value-switch button{border:0;background:#fff;color:var(--muted);padding:6px 12px;font-size:.78rem;min-height:34px;cursor:pointer}
+.value-switch button+button{border-inline-start:1px solid var(--line)}
+.value-switch button[aria-pressed="true"]{background:var(--teal);color:#fff;font-weight:700}
+.value-switch button:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.workbench{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr);gap:20px;align-items:start}
+.workbench-form{min-width:0}
+.workbench-side{position:sticky;top:14px;border:1px solid var(--line);border-radius:14px;background:#fcfafb;padding:16px}
+.workbench-side h3{font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#2f8a58;flex:none}
+.live-stale .live-dot{background:var(--gold)}
+.live-stat{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin-bottom:9px}
+.live-stat span{display:block;font-size:.76rem;color:var(--muted)}
+.live-stat strong{font-size:1.42rem;font-weight:800;color:var(--ink)}
+.live-stat.profit strong{color:#287347}
+.live-stat.profit.negative strong{color:var(--red)}
+.live-rooms{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
+.live-rooms h4{font-size:.78rem;color:var(--muted);font-weight:500;margin-bottom:7px}
+.live-row{display:flex;justify-content:space-between;gap:10px;font-size:.86rem;padding:6px 0;border-top:1px solid #f0eaed}
+.live-row:first-of-type{border-top:0}
+.live-row span{color:var(--muted)}
+.live-row b{font-weight:700}
+.live-row.below b{color:var(--red)}
+.live-error{background:#fbecee;color:#a63146;border-radius:10px;padding:10px 12px;font-size:.84rem;line-height:1.7}
+.step-head{display:none}
+.night-quick{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+.night-quick button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 14px;font-size:.82rem;min-height:38px;color:var(--muted);cursor:pointer}
+.night-quick button[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-soft);color:var(--teal);font-weight:700}
+.night-quick button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.trip-field{border:1px solid #e4d9ea;background:#faf7fc;border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.trip-field label{margin:0}
+.trip-field small{display:block;color:var(--muted);font-size:.78rem;margin-top:6px}
+.quote-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;background:#faf8fa;border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:16px}
+.quote-toolbar label{flex:1;min-width:190px;margin:0;font-size:.82rem}
+.quote-toolbar .btn{min-width:150px}
+.bulk-margin{display:flex;gap:10px;flex-wrap:wrap;align-items:end;border-top:1px solid var(--line);margin-top:12px;padding-top:12px;flex-basis:100%}
+.line-row{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 14px;margin-bottom:10px}
+.line-row-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+.line-row-head h3{font-size:.97rem;line-height:1.55}
+.line-row-head small{color:var(--muted);font-size:.79rem;display:block;margin-top:2px}
+.line-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px}
+.line-grid label{margin:0;font-size:.78rem}
+.line-summary{margin-top:10px;border-top:1px solid #f0eaed;padding-top:9px}
+.line-extras>summary{font-size:.82rem;color:var(--teal);margin-top:10px}
+.quote-result .table-wrap{margin-top:12px}
+.quote-result th:last-child{background:var(--teal);color:#fff}
+.quote-result td:last-child{background:#faf2f5;font-weight:800}
+.quote-total-row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--teal-soft);border-radius:12px;padding:14px 18px;margin-top:12px}
+.quote-total-row strong{font-size:1.5rem;color:var(--teal);font-weight:800}
+@media(max-width:1180px){.workbench{grid-template-columns:minmax(0,1fr)}.workbench-side{position:static}}
+@media(max-width:760px){
+ .toolbar-main{width:100%;flex-wrap:wrap}
+ .view-switch{width:100%}
+ .view-switch button{flex:1}
+ .filter-fields label{flex-basis:100%}
+ .filter-fields label select{width:100%;max-width:none}
+ .filter-clear{width:100%;margin:4px 0 0}
+ .chips{width:100%}
+ .chip{flex:1;text-align:center}
+ .offer-grid{grid-template-columns:minmax(0,1fr)}
+ .price-tiles{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px 14px;gap:7px}
+ .offer-from{padding:12px 14px}
+ .offer-card .details-toggle{padding:0 14px 12px}
+ .compare-table{min-width:560px}
+ .workbench-side{border:0;border-radius:0;padding:0;background:transparent}
+ .step-head{display:block;margin-bottom:14px}
+ .step-bar{display:flex;gap:5px;margin-top:9px}
+ .step-bar i{flex:1;height:4px;border-radius:2px;background:#e2d8dd}
+ .step-bar i.done{background:var(--teal)}
+ .step-title{font-size:1.02rem;font-weight:700;margin-top:9px}
+ .step-index{font-size:.76rem;color:var(--muted)}
+ .step-pane[hidden]{display:none!important}
+ .live-bar{position:sticky;bottom:0;z-index:3;background:#fffffff5;backdrop-filter:blur(10px);border-top:1px solid var(--line);margin:0 -15px -15px;padding:11px 15px}
+ .live-bar-figures{display:flex;justify-content:space-between;gap:8px;font-size:.8rem;margin-bottom:9px;flex-wrap:wrap}
+ .live-bar-figures b{font-weight:800}
+ .live-bar-figures .profit{color:#287347}
+ .live-bar-figures .profit.negative{color:var(--red)}
+ .step-nav{display:flex;gap:8px}
+ .step-nav .btn{flex:1}
+ .dialog-body form>.form-actions{position:static;background:transparent;backdrop-filter:none;padding-top:14px}
+ .quote-toolbar label{flex-basis:100%}
+ .quote-toolbar .btn{width:100%}
+ .line-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .quote-total-row{padding:12px 14px}
+ .quote-total-row strong{font-size:1.25rem}
+}
+@media print{.view-switch,.chips,.filter-clear,.night-quick,.live-bar,.workbench-side{display:none!important}}
 </style><!-- Tajawal font license
 Copyright 2018 Boutros International. (http://www.boutrosfonts.com)
 
@@ -1565,6 +1699,7 @@ document.addEventListener('click',event=>{
     case'filters':{const panel=d('#pro-filter-fields');const open=panel.classList.toggle('is-open');own.setAttribute('aria-expanded',String(open));break;}
     case'reset':proReset();gi();break;
     case'drawer-close':proDrawer(false);break;
+    default:proHandleAction(own);break;
   }return;}
   if(action?.dataset.action==='menu'){event.preventDefault();event.stopImmediatePropagation();proDrawer(!d('.sidebar').classList.contains('open'));return;}
   if(action?.dataset.action==='navigate'){proReset();proDrawer(false);}
@@ -1586,7 +1721,7 @@ document.addEventListener('input',event=>{
 });
 document.addEventListener('change',event=>{
   const map={'pro-company':'company','pro-status':'status','pro-validity':'validity','pro-definition':'definition'};
-  if(map[event.target.id]){proFilters[map[event.target.id]]=event.target.value;if(event.target.id==='pro-company')d('#pro-company-search').value=proCompanyName(event.target.value);ve();}
+  if(map[event.target.id]){proFilters[map[event.target.id]]=event.target.value;if(event.target.id==='pro-company'&&d('#pro-company-search'))d('#pro-company-search').value=proCompanyName(event.target.value);ve();}
   if(event.target.id==='pro-sort'){s.sort=event.target.value;ve();}
 });
 document.addEventListener('keydown',event=>{
@@ -1603,6 +1738,492 @@ document.addEventListener('keydown',event=>{
 },true);
 window.addEventListener('resize',()=>{proCloseMenu();if(innerWidth>760&&document.body.classList.contains('drawer-open'))proDrawer(false);});
 document.addEventListener('scroll',event=>{if(proMenu&&!proMenu.contains(event.target))proCloseMenu();},true);
+
+/* ===== Release 2 ===== Trips, view switch, live pricing workspace, quote builder, faster sign-in.
+   Calculations, action names and API contracts are untouched; the server stays authoritative. */
+const {calculateProgram:proCalcProgram,calculateService:proCalcService}=Be();
+const proOriginalApi=v,proOriginalBootstrap=z,proOriginalShell=Qe,proOriginalAction=Ri,proOriginalSubmit=qi;
+const proOriginalDefDialog=Ye,proOriginalDefFields=$e,proOriginalPricing=be,proOriginalCompanyPricing=Te,proOriginalQuote=Oe,proOriginalLines=te;
+let proPrefetchedBoot=null,proLastQuotePreview=null;
+proFilters.trip='';
+const proView={offers:sessionStorage.getItem('rihla_view')||''};
+const proNightPresets=[7,10,14];
+
+/* ---- faster sign-in and sign-out ---- */
+function proObserveApi(action,data){
+  if(action==='login'&&data&&data.boot)proPrefetchedBoot=data.boot;
+  if(action==='quote.preview')proLastQuotePreview=data;
+  return data;
+}
+v=async function(action,payload={},requestId){
+  return proObserveApi(action,await proOriginalApi(action,payload,requestId));
+};
+z=async function(){
+  const ready=proPrefetchedBoot;proPrefetchedBoot=null;
+  if(!ready)return proOriginalBootstrap();
+  s.boot=ready;
+  if(s.boot.mustChange){vi();return;}
+  Qe();
+};
+Qe=function(){
+  if(b()&&s.boot?.company?.allowPricing===false&&s.tab==='companyPricing')s.tab='offers';
+  proOriginalShell();
+  if(b()&&s.boot?.company?.allowPricing===false)d('.nav button[data-id="companyPricing"]')?.remove();
+};
+Ri=async function(action,id,el){
+  if(action==='logout'){
+    const pending=v('logout');
+    fe('');oe();d('#print-root').innerHTML='';ce();
+    pending.catch(()=>{});
+    return;
+  }
+  return proOriginalAction(action,id,el);
+};
+
+/* ---- trips ---- */
+function proTripDefs(){return b()?[]:(s.boot?.definitions||[]).filter(row=>row.type==='trip');}
+function proActiveTrips(current){return proTripDefs().filter(row=>row.active!==false||row.id===current);}
+function proTripNames(){
+  const rows=b()?s.boot?.assignments||[]:s.boot?.offers||[];
+  const names=new Set(rows.map(row=>row.tripName).filter(Boolean));
+  proTripDefs().filter(row=>row.active!==false).forEach(row=>names.add(row.name));
+  return [...names].sort((a,x)=>a.localeCompare(x,'ar'));
+}
+function proTripOf(row){
+  if(row.tripName)return row.tripName;
+  const pricing=(s.boot?.pricings||[]).find(p=>p.id===row.pricingId);
+  return pricing?.tripName||'';
+}
+Ye=function(row={type:'room',active:true,occupancy:1}){
+  proOriginalDefDialog(row);
+  const select=d('[name=type]');
+  if(select&&!select.querySelector('option[value="trip"]'))select.insertAdjacentHTML('beforeend','<option value="trip">رحلة</option>');
+  if(select&&row.type)select.value=row.type;
+  $e(row);
+  if(row.id)select.disabled=true;
+};
+$e=function(row={}){
+  proOriginalDefFields(row);
+  if(d('[name=type]')?.value!=='trip')return;
+  d('#definition-fields').innerHTML='<div class="grid">'+m('المدة بالليالي (اختياري)','nights',row.nights??'','max="365" step="1"')+he('ملاحظات الرحلة','notes',row.notes||'')+'</div>';
+};
+
+/* ---- toolbar ---- */
+function proChips(name,options,value){
+  return `<div class="chips" role="group" aria-label="${c(name)}">${options.map(([id,label])=>`<button type="button" class="chip" data-pro="chip" data-field="${c(name)}" data-value="${c(id)}" aria-pressed="${String(id)===String(value)}">${c(label)}</button>`).join('')}</div>`;
+}
+function proActiveFilterCount(){
+  let count=0;
+  if(s.kind&&s.kind!=='all')count++;
+  ['status','validity','definition'].forEach(key=>{if(proFilters[key]&&proFilters[key]!=='all')count++;});
+  if(proFilters.company)count++;
+  if(proFilters.trip)count++;
+  if(s.sort&&s.sort!=='newest')count++;
+  return count;
+}
+function proShowTripFilter(){return ['offers','pricing'].includes(s.tab)&&proTripNames().length>0;}
+function proViewMode(){
+  if(s.tab!=='offers')return 'cards';
+  if(proView.offers)return proView.offers;
+  return innerWidth<=760?'cards':'table';
+}
+U=function(withKind=false){
+  const filters=proActiveFilterCount();
+  const kindChips=withKind?proChips('kind',[['all','كل الأنواع'],['program','البرامج'],['service','الخدمات']],s.kind):'';
+  const statusChips=proChips('status',proStatusOptions(),proFilters.status);
+  const company=proCanCompanyFilter()?`<label>الشركة<select id="pro-company" aria-label="تصفية الشركة">${proOptions([['','كل الشركات'],...proCompanies().map(row=>[row.id,row.name])],proFilters.company)}</select></label>`:'';
+  const trip=proShowTripFilter()?`<label>الرحلة<select id="pro-trip" aria-label="تصفية الرحلة">${proOptions([['','كل الرحلات'],...proTripNames().map(name=>[name,name]),['__none','بلا رحلة']],proFilters.trip)}</select></label>`:'';
+  const validity=s.tab==='offers'?`<label>الصلاحية<select id="pro-validity" aria-label="تصفية الصلاحية">${proOptions([['all','جميع المدد'],['valid','ساري أو غير محدد'],['expired','منتهي']],proFilters.validity)}</select></label>`:'';
+  const definition=s.tab==='definitions'?`<label>التعريف<select id="pro-definition" aria-label="نوع التعريف">${proOptions([['all','كل التعريفات'],['trip','الرحلات'],['room','الغرف'],['hotel','الفنادق'],['city','المدن'],['service','الخدمات']],proFilters.definition)}</select></label>`:'';
+  const sort=`<label>الترتيب<select id="pro-sort" aria-label="ترتيب النتائج">${proOptions([['newest','الأحدث أولاً'],['name','الاسم أبجدياً']],s.sort||'newest')}</select></label>`;
+  const clear=filters?`<button type="button" class="filter-clear" data-pro="reset">مسح الفلاتر</button>`:'';
+  const view=s.tab==='offers'?`<div class="view-switch" role="group" aria-label="طريقة العرض"><button type="button" data-pro="view" data-value="cards" aria-pressed="${proViewMode()==='cards'}">بطاقات</button><button type="button" data-pro="view" data-value="table" aria-pressed="${proViewMode()==='table'}">جدول مقارنة</button></div>`:'';
+  return `<div class="toolbar"><div class="toolbar-main"><label class="search-field">بحث<input type="search" id="search" aria-label="البحث في ${s.tab==='companies'?'الشركات':'النتائج'}" placeholder="اسم العرض، الغرفة أو الشركة…" value="${c(s.filter)}"></label><button type="button" class="btn filter-toggle" aria-expanded="false" aria-controls="pro-filter-fields" data-pro="filters">الفلاتر${filters?`<span class="filter-count">${filters}</span>`:''}</button>${view}</div><div class="filter-fields" id="pro-filter-fields">${statusChips}${kindChips}${company}${trip}${validity}${definition}${sort}${clear}</div></div><div class="result-summary"><span id="result-count" role="status" aria-live="polite"></span><span id="pro-value-switch"></span></div><div id="list-results"></div>`;
+};
+const proBaseReset=proReset;
+proReset=function(){proBaseReset();proFilters.trip='';};
+
+/* ---- offers ---- */
+function proOfferLines(row){
+  const assigned=!b()&&proFilters.company?proAssignments(row.id).find(a=>a.companyId===proFilters.company):null;
+  return {assigned,lines:assigned?.lines||row.lines||[],net:b()||!!assigned};
+}
+function proValueMode(net){
+  if(!net)return 'basePrice';
+  const stored=sessionStorage.getItem('rihla_value');
+  return ['basePrice','commission','netPrice'].includes(stored)?stored:'netPrice';
+}
+function proValueLabel(mode){return {basePrice:'السعر الأساسي',commission:'العمولة',netPrice:'الصافي'}[mode];}
+function proOfferStatus(row){
+  if(row.archived)return P('مؤرشف');
+  if(b())return P(proExpired(row)?'منتهي':'متاح',proExpired(row)?'danger':'ok');
+  return P(row.status==='approved'?'معتمد':'مسودة',row.status==='approved'?'ok':'');
+}
+function proTripBadge(row){
+  const trip=proTripOf(row);
+  return trip?`<span class="offer-trip">${c(trip)}</span>`:'';
+}
+function proMinPrice(lines,mode){
+  const values=lines.map(line=>line[mode]).filter(Number.isFinite);
+  return values.length?Math.min(...values):0;
+}
+function proOfferCard(row){
+  const {assigned,lines,net}=proOfferLines(row);
+  const mode=proValueMode(net);
+  const tiles=lines.map(line=>`<div class="price-tile"><b>${c(line.label)}</b><span class="num">${ne(line[mode]??line.basePrice)}</span><small>${c($(line.currency))} · ${c(G(line.unit))}</small></div>`).join('');
+  const detail=M(net?['الغرفة / الخدمة','السعر الأساسي','العمولة','الصافي للشركة']:['الغرفة / الخدمة','سعر البيع'],lines.map(line=>R([proRoomLabel(line),...(net?[f(line.basePrice,line.currency),f(line.commission,line.currency),`<span class="price-value">${f(line.netPrice,line.currency)}</span>`]:[`<span class="price-value">${f(line.basePrice,line.currency)}</span>`])])));
+  return `<article class="offer-card"><div class="offer-card-head"><div><span class="offer-kind">${row.kind==='program'?'برنامج سياحي':'خدمة مستقلة'}</span><h2>${c(row.name)}</h2><div class="offer-meta">${proTripBadge(row)}<span>${lines.length} ${row.kind==='program'?'أنواع غرف':'بنود'}</span><span>الصلاحية: <bdi>${c(row.validUntil||'غير محددة')}</bdi></span></div></div><div>${proOfferStatus(row)}</div></div>${assigned?`<div class="company-context">أسعار ${c(assigned.companyName||proCompanyName(assigned.companyId))} · ${assigned.active?'التخصيص مفعّل':'التخصيص موقوف'}${assigned.offerVersion!==row.version?' · تخصيص من إصدار سابق؛ راجع النشر لتحديثه':''}</div>`:''}<div class="offer-from"><small>${proValueLabel(mode)} يبدأ من</small><span class="price-value">${f(proMinPrice(lines,mode),lines[0]?.currency)}</span></div><div class="price-tiles">${tiles}</div><details class="details-toggle"><summary>كل الأسعار بالتفصيل</summary>${detail}</details>${row.description?`<details class="offer-description"><summary>تفاصيل البرنامج والشروط</summary><p>${c(row.description)}</p></details>`:''}<div class="offer-card-actions"><small>${net?'الصافي بعد خصم العمولة مرة واحدة':'كل الأسعار حسب نوع الغرفة والوحدة'}</small>${proOfferActions(row)}</div></article>`;
+}
+function proRoomColumns(rows){
+  const seen=new Map();
+  rows.forEach(row=>proOfferLines(row).lines.forEach(line=>{if(!seen.has(line.label))seen.set(line.label,line.count||99);}));
+  return [...seen.entries()].sort((a,x)=>a[1]-x[1]||a[0].localeCompare(x[0],'ar')).map(entry=>entry[0]);
+}
+function proCompareSection(rows,programs){
+  if(!rows.length)return '';
+  const net=rows.some(row=>proOfferLines(row).net);
+  const mode=proValueMode(net);
+  const columns=programs?proRoomColumns(rows):[];
+  const showTrip=rows.some(row=>proTripOf(row));
+  const headers=['العرض',...(showTrip?['الرحلة']:[]),...(programs?columns:['البنود','يبدأ من']),'الصلاحية','الحالة','الإجراءات'];
+  const body=rows.map(row=>{
+    const {lines}=proOfferLines(row);
+    const cells=[`<span class="table-title">${c(row.name)}</span><small>${lines.length} ${programs?'أنواع غرف':'بنود'}</small>`];
+    if(showTrip)cells.push(c(proTripOf(row)||'—'));
+    if(programs)columns.forEach(label=>{
+      const line=lines.find(x=>x.label===label);
+      cells.push(line?`<span class="num">${ne(line[mode]??line.basePrice)}</span>`:'<span class="empty-cell">—</span>');
+    });
+    else cells.push(String(lines.length),`<span class="num">${ne(proMinPrice(lines,mode))}</span> <small>${c($(lines[0]?.currency))}</small>`);
+    cells.push(c(row.validUntil||'غير محددة'),proOfferStatus(row),proOfferActions(row));
+    let index=0;
+    const html=R(cells).replace(/<td>/g,()=>{
+      const cls=programs&&index>(showTrip?1:0)&&index<(showTrip?2:1)+columns.length?' class="room-cell"':'';
+      index++;return '<td'+cls+'>';
+    });
+    return row.archived?html.replace('<tr>','<tr class="archived-row">'):html;
+  }).join('');
+  const table=M(headers,[]).replace('<tbody></tbody>','<tbody>'+body+'</tbody>').replace('class="table-wrap"','class="table-wrap compare-wrap"').replace('<table>','<table class="compare-table">');
+  return (programs?'<div class="compare-group">البرامج · سعر الفرد حسب نوع الغرفة</div>':'<div class="compare-group">الخدمات المستقلة</div>')+table;
+}
+function proValueSwitch(rows){
+  if(!rows.some(row=>proOfferLines(row).net))return '';
+  const mode=proValueMode(true);
+  return `<span class="value-switch" role="group" aria-label="القيمة المعروضة">${[['basePrice','أساسي'],['commission','عمولة'],['netPrice','صافي']].map(([id,label])=>`<button type="button" data-pro="value" data-value="${id}" aria-pressed="${mode===id}">${label}</button>`).join('')}</span>`;
+}
+function proDefinitionRows(rows){
+  const label={room:'غرفة',city:'مدينة',hotel:'فندق',service:'خدمة',trip:'رحلة'};
+  const detail=row=>{
+    if(row.type==='room')return row.occupancy+' أشخاص'+(row.extraBeds!=null?' · '+row.extraBeds+' أسرّة إضافية':'');
+    if(row.type==='service')return ne(row.cost)+' '+c(row.currency)+' · '+G(row.unit);
+    if(row.type==='hotel')return ne(row.rate)+' SAR / ليلة';
+    if(row.type==='trip')return row.nights!=null?row.nights+' ليالٍ':'المدة غير محددة';
+    return '—';
+  };
+  return M(['الاسم','النوع','التفاصيل','الحالة','الإجراءات'],rows.map(row=>R([
+    `<b>${c(row.name)}</b>${row.type==='trip'&&row.notes?`<small>${c(row.notes)}</small>`:''}`,
+    c(label[row.type]||row.type),c(detail(row)),
+    P(row.active?'فعال':'موقوف',row.active?'ok':''),
+    L('editDefinitions')?V(l('تعديل','definition.edit',row.id,'small')):'—'
+  ])));
+}
+ve=function(){
+  proCloseMenu();
+  if(s.tab==='offers'){
+    const rows=X(b()?s.boot.assignments||[]:s.boot.offers||[]);
+    d('#result-count').textContent=rows.length+' عرض مطابق';
+    const valueSwitch=d('#pro-value-switch');if(valueSwitch)valueSwitch.innerHTML=proValueSwitch(rows);
+    const note=proFilters.company&&proCanCompanyFilter()?`<div class="filter-note">عرض التخصيصات الخاصة بـ ${c(proCompanyName(proFilters.company))}. قد تختلف أسعار التخصيص عن أحدث إصدار للعرض.</div>`:'';
+    if(!rows.length){d('#list-results').innerHTML=note+'<div class="empty"><strong>لا توجد عروض مطابقة</strong>غيّر البحث أو امسح الفلاتر لعرض النتائج المتاحة.</div>';proUpgradeActions();return;}
+    if(proViewMode()==='cards')d('#list-results').innerHTML=note+`<div class="offer-grid">${rows.map(proOfferCard).join('')}</div>`;
+    else d('#list-results').innerHTML=note+proCompareSection(rows.filter(row=>row.kind==='program'),true)+proCompareSection(rows.filter(row=>row.kind!=='program'),false);
+  }else if(s.tab==='definitions'){
+    const rows=X(s.boot.definitions||[]);
+    d('#result-count').textContent=rows.length+' تعريف';
+    d('#list-results').innerHTML=rows.length?proDefinitionRows(rows):'<div class="empty"><strong>لا توجد تعريفات مطابقة</strong>ابدأ بإضافة تعريف أو غيّر البحث.</div>';
+  }else proOriginalList();
+  proUpgradeActions();
+};
+const proBaseFilter=X;
+X=function(rows){
+  const filtered=proBaseFilter(rows);
+  if(!proFilters.trip)return filtered;
+  if(s.tab==='offers')return filtered.filter(row=>proFilters.trip==='__none'?!proTripOf(row):proTripOf(row)===proFilters.trip);
+  if(s.tab==='pricing')return filtered.filter(row=>proFilters.trip==='__none'?!row.tripName:row.tripName===proFilters.trip);
+  return filtered;
+};
+
+/* ---- pricing workspace: split panel on desktop, steps on mobile, live figures on both ---- */
+function proIsNarrow(){return innerWidth<=760;}
+function proSnapshotDefs(){return [...new Map([...(s.boot?.definitions||[]),...(s.editor?.row?.definitionsSnapshot||[])].map(row=>[row.id,row])).values()];}
+function proLivePricing(){
+  const payload=ei(),defs=proSnapshotDefs();
+  if(payload.kind==='program'){
+    const rooms=payload.roomIds.map(id=>defs.find(row=>row.id===id&&row.type==='room')).filter(Boolean);
+    return {kind:'program',result:proCalcProgram(payload.input,rooms,defs.filter(row=>row.type==='service'))};
+  }
+  return {kind:'service',result:proCalcService(payload.input,defs.find(row=>row.id===payload.serviceId))};
+}
+function proLiveCompanyPricing(){
+  const payload=ti();
+  if(payload.kind==='program')return {kind:'program',result:proCalcProgram(payload.input,payload.rooms,[])};
+  return {kind:'service',result:proCalcService(payload.input,{...payload.service,active:true})};
+}
+function proLiveMarkup(view){
+  const rows=view.result.results||[];
+  if(!rows.length)return '<div class="live-error">اختر نوع غرفة واحداً على الأقل.</div>';
+  const first=rows[0],program=view.kind==='program';
+  const rate=first.baseCost>0?ne(first.profit/first.baseCost*100)+'%':'—';
+  const list=rows.map(row=>`<div class="live-row${row.sell<row.baseCost?' below':''}"><span>${c(row.label)}</span><b class="num">${ne(row.sell)}</b></div>`).join('');
+  return `<div class="live-stat"><span>${program?'تكلفة الفرد':'تكلفة الوحدة'} · ${c(first.label)}</span><strong class="num">${ne(first.baseCost)}</strong></div><div class="live-stat"><span>${program?'سعر البيع للفرد':'سعر بيع الوحدة'}</span><strong class="num">${ne(first.sell)}</strong></div><div class="live-stat profit${first.profit<0?' negative':''}"><span>الربح · ${rate} من التكلفة</span><strong class="num">${ne(first.profit)}</strong></div><div class="live-rooms"><h4>${program?'سعر البيع حسب الغرفة':'البنود'} · ${c($(first.currency))}</h4>${list}</div>${rows.some(row=>row.sell<row.baseCost)?'<div class="live-error">أحد البنود يُباع تحت التكلفة.</div>':''}`;
+}
+function proLiveBarMarkup(view){
+  const first=(view.result.results||[])[0];
+  if(!first)return '';
+  return `<div class="live-bar-figures"><span>التكلفة <b class="num">${ne(first.baseCost)}</b></span><span>البيع <b class="num">${ne(first.sell)}</b></span><span class="profit${first.profit<0?' negative':''}">الربح <b class="num">${ne(first.profit)}</b></span></div>`;
+}
+function proRenderLive(compute){
+  const body=d('#pro-live-body'),bar=d('#pro-live-bar');
+  if(!body)return;
+  let view=null,error='';
+  try{view=compute();}catch(e){error=e.message||String(e);}
+  body.innerHTML='<h3><span class="live-dot"></span>النتائج اللحظية</h3>'+(view?proLiveMarkup(view):`<div class="live-error">${c(error)}</div>`);
+  const figures=bar&&bar.querySelector('#pro-live-figures');
+  if(figures)figures.innerHTML=view?proLiveBarMarkup(view):`<div class="live-error">${c(error)}</div>`;
+}
+function proStepPanes(form,groups){
+  const main=form.querySelector('.workbench-form');
+  groups.forEach((group,index)=>{
+    const pane=document.createElement('div');
+    pane.className='step-pane';pane.dataset.step=String(index);pane.dataset.title=group.title;
+    group.nodes.filter(Boolean).forEach(node=>pane.appendChild(node));
+    main.appendChild(pane);
+  });
+}
+function proSyncSteps(form){
+  const panes=[...form.querySelectorAll('.step-pane')],head=form.querySelector('.step-head'),bar=form.querySelector('#pro-live-bar');
+  const narrow=proIsNarrow();
+  const step=Math.min(Number(form.dataset.step||0),panes.length-1);
+  form.dataset.step=String(step);
+  panes.forEach((pane,index)=>{pane.hidden=narrow&&index!==step;});
+  if(head){
+    head.hidden=!narrow;
+    head.innerHTML=narrow?`<div class="step-bar">${panes.map((p,i)=>`<i class="${i<=step?'done':''}"></i>`).join('')}</div><div class="step-index">خطوة ${step+1} من ${panes.length}</div><div class="step-title">${c(panes[step].dataset.title)}</div>`:'';
+  }
+  if(bar){
+    const nav=bar.querySelector('#pro-live-nav');
+    nav.innerHTML=narrow?`<div class="step-nav">${step>0?'<button type="button" class="btn" data-pro="step" data-value="-1">السابق</button>':''}${step<panes.length-1?'<button type="button" class="btn primary" data-pro="step" data-value="1">التالي</button>':''}</div>`:'';
+    bar.classList.toggle('live-bar',narrow);
+  }
+  form.querySelector('.form-actions').hidden=narrow&&step<panes.length-1;
+}
+function proBuildWorkbench(formId,groupsOf){
+  const form=d('#'+formId);if(!form)return;
+  const actions=form.querySelector('.form-actions');
+  const wb=document.createElement('div');wb.className='workbench';
+  const main=document.createElement('div');main.className='workbench-form';
+  const side=document.createElement('aside');side.className='workbench-side';
+  const head=document.createElement('div');head.className='step-head';
+  const bar=document.createElement('div');bar.id='pro-live-bar';
+  bar.innerHTML='<div id="pro-live-figures"></div><div id="pro-live-nav"></div>';
+  side.innerHTML='<div id="pro-live-body"></div>';
+  const kept=[...form.childNodes].filter(node=>node!==actions);
+  form.insertBefore(wb,actions);
+  wb.append(main,side);
+  main.appendChild(head);
+  proStepPanes(form,groupsOf(kept));
+  form.insertBefore(bar,actions);
+  form.dataset.step='0';
+  proSyncSteps(form);
+}
+function proPricingGroups(kept){
+  const pick=selector=>kept.find(node=>node.nodeType===1&&node.matches(selector));
+  const basics=pick('.grid'),program=pick('#program-inputs'),service=pick('#service-inputs'),trip=pick('#pro-trip-field');
+  const rest=kept.filter(node=>node.nodeType===1&&![basics,program,service,trip].includes(node));
+  const resultIndex=rest.findIndex(node=>node.classList.contains('result')||node.classList.contains('inline'));
+  return [
+    {title:'الأساسيات والرحلة',nodes:[basics,trip]},
+    {title:'تفاصيل التسعير',nodes:[program,service]},
+    {title:'الصرف والربح',nodes:rest.slice(0,resultIndex<0?rest.length:resultIndex)},
+    {title:'النتيجة والحفظ',nodes:resultIndex<0?[]:rest.slice(resultIndex)}
+  ].filter(group=>group.nodes.filter(Boolean).length);
+}
+function proTripField(current){
+  const trips=proActiveTrips(current);
+  const options=[['','بلا رحلة'],...trips.map(row=>[row.id,row.name+(row.nights!=null?' · '+row.nights+' ليالٍ':'')])];
+  return `<div class="trip-field" id="pro-trip-field">${y('الرحلة','tripId',options,current||'')}<small>مطلوبة للبرامج، واختيارية للخدمات المستقلة. تُعرّف الرحلات من تبويب التعريفات.</small></div>`;
+}
+function proNightQuick(name,value){
+  return `<div class="night-quick" role="group" aria-label="اختيار سريع لعدد الليالي">${proNightPresets.map(n=>`<button type="button" data-pro="nights" data-field="${name}" data-value="${n}" aria-pressed="${Number(value)===n}">${n}</button>`).join('')}</div>`;
+}
+be=function(row){
+  proOriginalPricing(row);
+  const current=s.editor?.row?.tripId||'';
+  d('#program-inputs').insertAdjacentHTML('beforebegin',proTripField(current));
+  const trip=proActiveTrips(current).find(x=>x.id===current);
+  [['makkahNights',d('[name=makkahNights]')],['madinahNights',d('[name=madinahNights]')]].forEach(([name,input])=>{
+    if(input)input.closest('label').insertAdjacentHTML('beforeend',proNightQuick(name,input.value));
+  });
+  proBuildWorkbench('pricing-form',proPricingGroups);
+  proRenderLive(proLivePricing);
+  if(trip)d('#pro-trip-field small').textContent='مدة الرحلة المسجلة: '+(trip.nights!=null?trip.nights+' ليالٍ':'غير محددة')+'. يمكنك تعديل الليالي في خطوة التسعير.';
+};
+const proBasePricingPayload=ei;
+ei=function(){
+  const payload=proBasePricingPayload();
+  payload.tripId=d('[name=tripId]')?.value||'';
+  return payload;
+};
+Te=function(row){
+  proOriginalCompanyPricing(row);
+  const input=d('[name=makkahNights]');
+  if(input)input.closest('label').insertAdjacentHTML('beforeend',proNightQuick('makkahNights',input.value));
+  const madinah=d('[name=madinahNights]');
+  if(madinah)madinah.closest('label').insertAdjacentHTML('beforeend',proNightQuick('madinahNights',madinah.value));
+  proBuildWorkbench('cp-form',kept=>{
+    const pick=selector=>kept.find(node=>node.nodeType===1&&node.matches(selector));
+    const basics=pick('.grid'),hint=pick('.hint'),program=pick('#cp-program'),service=pick('#cp-service');
+    const rest=kept.filter(node=>node.nodeType===1&&![basics,hint,program,service].includes(node));
+    const resultIndex=rest.findIndex(node=>node.classList.contains('result')||node.classList.contains('inline'));
+    return [
+      {title:'الأساسيات',nodes:[basics,hint]},
+      {title:'تفاصيل الحساب',nodes:[program,service]},
+      {title:'الصرف والربح',nodes:rest.slice(0,resultIndex<0?rest.length:resultIndex)},
+      {title:'النتيجة والحفظ',nodes:resultIndex<0?[]:rest.slice(resultIndex)}
+    ].filter(group=>group.nodes.filter(Boolean).length);
+  });
+  proRenderLive(proLiveCompanyPricing);
+};
+function proActiveLive(){
+  if(d('#pricing-form'))return proLivePricing;
+  if(d('#cp-form'))return proLiveCompanyPricing;
+  return null;
+}
+
+/* ---- customer quotes: add a whole offer at once, one shared margin, clear per-room result ---- */
+function extraFields(extra,index,line,lineIndex){
+  const same=(extra.currency||line.source.currency||'LYD')===(line.source.currency||'LYD');
+  return `<div class="extra-row line-grid"><label>وصف التكلفة<input data-extra="label" value="${c(extra.label||'')}" maxlength="200"></label><label>المبلغ<input data-extra="amount" type="number" min="0" step="0.001" value="${c(extra.amount??0)}"></label><label>العملة<select data-extra="currency">${re.map(([id,label])=>`<option value="${id}" ${(extra.currency||line.source.currency||'LYD')===id?'selected':''}>${c(label)}</option>`).join('')}</select></label><label>سعر التحويل<input data-extra="rate" type="number" min="0.000001" step="0.000001" value="${c(same?1:extra.rate??'')}" ${same?'disabled':''}></label><div>${l('حذف','quote.extraRemove',lineIndex+':'+index,'small danger')}</div></div>`;
+}
+function proQuoteOffers(){return (s.boot?.assignments||[]).filter(row=>!row.expired);}
+function proQuoteToolbar(){
+  const offers=proQuoteOffers();
+  return `<div class="quote-toolbar">${y('إضافة عرض كامل بكل غرفه','newOffer',[['','اختر العرض'],...offers.map(row=>[row.id,row.name+(row.tripName?' · '+row.tripName:'')+' — '+row.lines.length+(row.kind==='program'?' أنواع غرف':' بنود')])],'')}<button type="button" class="btn primary" data-pro="quote-offer">إضافة كل البنود</button>${y('أو بند واحد','newSource',[['','اختر البند'],...offers.flatMap(row=>row.lines.map(line=>[row.id+'|'+line.key,row.name+' — '+line.label+' · '+ne(line.netPrice)+' '+$(line.currency)]))],'')}${l('إضافة البند','quote.add')}<div class="bulk-margin">${y('ربح موحّد لكل البنود','bulkMarginType',[['fixed','مبلغ لكل وحدة'],['percent','نسبة من التكلفة %']],'fixed')}${m('قيمة الربح','bulkMarginValue',0)}<button type="button" class="btn" data-pro="quote-margin">تطبيق على كل البنود</button></div></div>`;
+}
+Oe=function(quote,assignmentId){
+  proOriginalQuote(quote,assignmentId);
+  const bar=d('#quote-form .toolbar');
+  if(bar)bar.outerHTML=proQuoteToolbar();
+};
+te=function(){
+  d('#quote-lines').innerHTML=s.editor.lines.map((line,index)=>{
+    const unit=line.source.unit;
+    const countLabel=unit==='person'?'عدد الأشخاص':unit==='roomNight'?'عدد الغرف':'عدد الخدمات';
+    return `<section class="line-editor line-row" data-index="${index}"><div class="line-row-head"><div><h3>${c(line.source.label)}</h3><small>${c(line.source.offerName)}${line.source.tripName?' · '+c(line.source.tripName):''} · صافي الشراء ${f(line.source.netPrice,line.source.currency)} ${c(G(unit))}</small></div>${l('حذف','quote.remove',String(index),'small danger')}</div><div class="line-grid">${m(countLabel,'quantity',line.quantity,'min="1" max="10000" step="1" required')}${unit==='roomNight'?m('عدد الليالي','nights',line.nights,'min="1" max="365" step="1" required'):''}${y('طريقة السعر','mode',[['margin','تكلفة + ربح'],['manual','سعر بيع نهائي']],line.mode)}${y('طريقة الربح','marginType',[['fixed','مبلغ لكل وحدة'],['percent','نسبة %']],line.marginType)}${m('قيمة الربح','marginValue',line.marginValue)}${m('بيع الوحدة','sellUnit',line.sellUnit,'required')}</div><details class="line-extras" ${line.extras.length?'open':''}><summary>تكاليف إضافية لهذا البند (${line.extras.length})</summary><div class="extras">${line.extras.map((extra,i)=>extraFields(extra,i,line,index)).join('')}</div>${l('＋ تكلفة إضافية','quote.extra',String(index),'small')}</details><div class="line-summary section"></div></section>`;
+  }).join('');
+  Pe();
+};
+function proQuoteResult(preview){
+  const lines=preview.quote.lines||[];
+  const programs=lines.filter(line=>line.unit==='person');
+  const others=lines.filter(line=>line.unit!=='person');
+  const block=(rows,title,countHead)=>rows.length?`<div class="compare-group">${title}</div>`+M(['الغرفة / البند',countHead,'صافي الشراء','الإضافات','الربح','بيع الوحدة','إجمالي البند'],rows.map(line=>R([
+    proRoomLabel(line),
+    `<span class="num">${ne(line.units)}</span>`,
+    f(line.purchase,line.currency),
+    f(line.extraTotal,line.currency),
+    `<span class="${line.profit<0?'profit-negative':'profit-positive'}">${f(line.profit,line.currency)}</span>`,
+    f(line.sellUnit,line.currency),
+    `<span class="money">${f(line.total,line.currency)}</span>${line.belowCost?'<small class="profit-negative">تحت التكلفة</small>':''}`
+  ]))):'';
+  const totals=(preview.quote.totals||[]).map(total=>`<div class="quote-total-row"><div><small>إجمالي ${c($(total.currency))}</small><p>الربح المتوقع ${f(total.profit,total.currency)}</p></div><strong>${ne(total.total)}</strong></div>`).join('');
+  const previous=preview.previousTotals?.length?`<div class="hint section">الإجماليات السابقة: ${se({totals:preview.previousTotals})}</div>`:'';
+  return `<div class="quote-result"><h3>تفاصيل التسعيرة قبل الحفظ</h3>${block(programs,'البرامج · حسب نوع الغرفة','عدد الأشخاص')}${block(others,'الغرف والخدمات','عدد الوحدات')}${totals}${previous}<div class="form-actions">${l('تأكيد حفظ التسعيرة','quote.commit','','primary')}</div></div>`;
+}
+qi=async function(form){
+  await proOriginalSubmit(form);
+  if(form.id==='quote-form'&&proLastQuotePreview&&d('#quote-review')?.children.length){
+    d('#quote-review').innerHTML=proQuoteResult(proLastQuotePreview);
+    d('#quote-review').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+};
+Ue=function(data){
+  const trip=data.tripName||data.lines?.find(line=>line.tripName)?.tripName||'';
+  return `<img class="print-brand" src="${Ke}" alt="أركان مكة للخدمات السياحية">`+proOriginalPrint(data).replace('<div class="print-meta">',`<div class="print-meta">${trip?`<p>الرحلة: ${c(trip)}</p>`:''}`);
+};
+
+/* ---- wiring ---- */
+function proHandleAction(own){
+  switch(own.dataset.pro){
+    case'chip':{
+            if(own.dataset.field==='kind')s.kind=own.dataset.value;else proFilters.status=own.dataset.value;
+      gi();break;
+    }
+    case'view':{
+            proView.offers=own.dataset.value;sessionStorage.setItem('rihla_view',own.dataset.value);gi();break;
+    }
+    case'value':{
+            sessionStorage.setItem('rihla_value',own.dataset.value);ve();break;
+    }
+    case'nights':{
+            const input=d('[name='+own.dataset.field+']');
+      if(!input)break;
+      input.value=own.dataset.value;
+      input.dispatchEvent(new Event('input',{bubbles:true}));
+      [...own.parentElement.children].forEach(button=>button.setAttribute('aria-pressed',String(button===own)));
+      break;
+    }
+    case'step':{
+            const form=own.closest('form');
+      form.dataset.step=String(Number(form.dataset.step||0)+Number(own.dataset.value));
+      proSyncSteps(form);
+      const live=proActiveLive();if(live)proRenderLive(live);
+      form.scrollIntoView({block:'start'});
+      break;
+    }
+    case'quote-offer':{
+            const id=d('[name=newOffer]').value;
+      const assignment=proQuoteOffers().find(row=>row.id===id);
+      if(!assignment){q('اختر العرض أولاً.');break;}
+      s.editor.lines=Q();
+      const room=60-s.editor.lines.length;
+      if(room<=0){q('بلغت الحد الأقصى 60 بنداً في التسعيرة الواحدة.');break;}
+      assignment.lines.slice(0,room).forEach(line=>s.editor.lines.push(ai(assignment,line.key)));
+      te();C();
+      q('أُضيفت '+Math.min(room,assignment.lines.length)+' بنود من «'+assignment.name+'».');
+      break;
+    }
+    case'quote-margin':{
+            const type=d('[name=bulkMarginType]').value,value=d('[name=bulkMarginValue]').value;
+      x('.line-editor').forEach(row=>{
+        row.querySelector('[name=mode]').value='margin';
+        row.querySelector('[name=marginType]').value=type;
+        row.querySelector('[name=marginValue]').value=value;
+      });
+      Pe();C();q('طُبّق الربح الموحّد على كل البنود. يمكنك تعديل أي بند بعدها.');
+      break;
+    }
+  }
+}
+document.addEventListener('change',event=>{
+  if(event.target.id==='pro-trip'){proFilters.trip=event.target.value;ve();}
+  if(event.target.name==='tripId'||event.target.name==='kind'){
+    const live=proActiveLive();if(live)proRenderLive(live);
+  }
+},true);
+document.addEventListener('input',event=>{
+  if(!event.target.closest('#pricing-form,#cp-form'))return;
+  if(event.target.closest('.cost-breakdown'))return;
+  const live=proActiveLive();if(live)proRenderLive(live);
+},true);
+document.addEventListener('change',event=>{
+  if(!event.target.closest('#pricing-form,#cp-form'))return;
+  const live=proActiveLive();if(live)proRenderLive(live);
+});
+window.addEventListener('resize',()=>{
+  const form=d('#pricing-form')||d('#cp-form');
+  if(form&&form.querySelector('.step-pane'))proSyncSteps(form);
+});
 /* END ARKAN PRO */
 
 s.token?z().catch(e=>{ce(),Le(e)}):ce();})();
