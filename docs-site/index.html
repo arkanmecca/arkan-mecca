@@ -1355,9 +1355,9 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
 .offer-card .details-toggle>summary{font-size:.83rem;color:var(--teal);font-weight:500}
 .offer-card .details-toggle .table-wrap{margin-top:10px;border:1px solid var(--line);border-radius:10px}
 .compare-wrap{border:1px solid var(--line);border-radius:12px;background:#fff;overflow-x:auto}
-.compare-table{width:100%;min-width:640px}
-.compare-table th{background:#f7f4f6;position:sticky;top:0;z-index:1}
-.compare-table td{font-size:.92rem;white-space:nowrap}
+.compare-table{width:100%}
+.compare-table th{background:#f7f4f6;position:sticky;top:0;z-index:1;border-inline-start:1px solid var(--line)}
+.compare-table td{font-size:.92rem;white-space:nowrap;border-inline-start:1px solid var(--line)}
 .compare-table td.room-cell{text-align:center}
 .compare-table td.room-cell.empty-cell{color:#c3b6bc}
 .compare-table .table-title{font-weight:700}
@@ -1426,7 +1426,7 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
  .price-tiles{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px 14px;gap:7px}
  .offer-from{padding:12px 14px}
  .offer-card .details-toggle{padding:0 14px 12px}
- .compare-table{min-width:560px}
+
  .workbench-side{border:0;border-radius:0;padding:0;background:transparent}
  .step-head{display:block;margin-bottom:14px}
  .step-bar{display:flex;gap:5px;margin-top:9px}
@@ -1492,7 +1492,7 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
 .workbench{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
 .workbench.is-wide{grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr)}
 .workbench:not(.is-wide) .workbench-side{position:static}
-.compare-table{min-width:0}
+
 .compare-table th.col-optional,.compare-table td.col-optional{display:none}
 .compare-wrap.is-wide .compare-table th.col-optional,.compare-wrap.is-wide .compare-table td.col-optional{display:table-cell}
 @media(max-width:1100px){
@@ -1508,6 +1508,63 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
  .filter-panel{position:fixed;inset:auto 0 0 0;width:100%;border-radius:16px 16px 0 0;max-height:82dvh;box-shadow:0 -12px 40px #30151e33}
  .filter-panel-body{max-height:calc(82dvh - 132px)}
  .active-filters{margin:-2px 0 14px}
+}
+
+/* ===== Release 4 — quick pricing, company switches, readable table on phones ===== */
+.switch-group{grid-column:1/-1;border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fbf9fb;margin-top:4px}
+.switch-group .check{display:flex;align-items:center;gap:9px;min-height:42px;margin:0}
+.switch-group .hint{margin-top:8px;font-size:.79rem}
+.quick-modes{display:inline-flex;border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-bottom:18px}
+.quick-modes button{border:0;background:#fff;color:var(--muted);padding:9px 17px;font-size:.85rem;font-weight:500;min-height:42px;cursor:pointer}
+.quick-modes button+button{border-inline-start:1px solid var(--line)}
+.quick-modes button[aria-pressed="true"]{background:var(--teal);color:#fff;font-weight:700}
+.quick-modes button:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.quick-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.85fr);gap:20px;align-items:start}
+.quick-inputs{padding:18px}
+.quick-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.quick-strip label,.quick-extra label{margin-bottom:12px}
+.quick-extra{border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fcfafb;margin-top:6px}
+.quick-extra>summary{font-size:.87rem;color:var(--teal);font-weight:500;cursor:pointer;min-height:34px;display:flex;align-items:center}
+.quick-extra-body{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
+.quick-results{position:sticky;top:14px}
+.quick-card{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:9px;background:#fff}
+.quick-card-label{display:block;font-size:.8rem;color:var(--muted)}
+.quick-card strong{display:block;font-size:1.55rem;font-weight:800;line-height:1.4}
+.quick-card small{display:block;font-size:.77rem;color:var(--muted)}
+.quick-card.lead{background:var(--teal-soft);border-color:var(--teal)}
+.quick-card.lead .quick-card-label,.quick-card.lead strong,.quick-card.lead small{color:var(--teal)}
+.quick-card.lead strong{font-size:2rem}
+.quick-card.below{border-color:var(--red)}
+.quick-card.below small{color:var(--red)}
+.quick-actions{display:flex;gap:9px;margin-top:12px}
+.quick-actions .btn{flex:1;margin:0}
+.quick-layout.mode-compact .quick-card strong{font-size:1.18rem}
+.quick-layout.mode-compact .quick-card.lead strong{font-size:1.35rem}
+.quick-layout.mode-compact .quick-card{padding:9px 12px;margin-bottom:6px}
+.quick-layout.mode-compact .quick-card small{display:none}
+.quick-layout.mode-guided .quick-two{grid-template-columns:minmax(0,1fr)}
+.quick-layout.mode-guided .quick-inputs label{margin-bottom:16px}
+#quick-form [data-step][hidden]{display:none!important}
+/* Phones: a frozen first column and honest horizontal scrolling beat a nine-column squeeze. */
+.compare-wrap{position:relative}
+.scroll-hint{font-size:.76rem;color:var(--muted);margin:0 0 7px;display:none}
+@media(max-width:900px){
+ .scroll-hint{display:block}
+ .compare-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .compare-table{min-width:max-content}
+ .compare-table th:first-child,.compare-table td:first-child{position:sticky;inset-inline-start:0;z-index:2;background:#fff;border-inline-end:2px solid var(--line);min-width:150px;max-width:190px;white-space:normal}
+ .compare-table th:first-child{z-index:3;background:#f7f4f6}
+ .compare-table th,.compare-table td{padding-inline:11px}
+}
+@media(max-width:760px){
+ .quick-layout{grid-template-columns:minmax(0,1fr)}
+ .quick-results{position:static}
+ .quick-inputs{padding:14px}
+ .quick-modes{display:flex;width:100%}
+ .quick-modes button{flex:1;padding:9px 6px}
+ .quick-card.lead strong{font-size:1.75rem}
+ .quick-actions{position:sticky;bottom:0;background:#fffffff5;backdrop-filter:blur(10px);padding:10px 0;margin:0}
+ .switch-group{padding:11px 12px}
 }
 </style><!-- Tajawal font license
 Copyright 2018 Boutros International. (http://www.boutrosfonts.com)
@@ -1924,7 +1981,7 @@ function proActiveFilters(){
   }));
 }
 function proActiveFilterCount(){return proActiveFilters().length;}
-function proShowTripFilter(){return ['offers','pricing'].includes(s.tab)&&proTripNames().length>0;}
+function proShowTripFilter(){return ['offers','pricing'].includes(s.tab);}
 function proViewMode(){
   if(s.tab!=='offers')return 'cards';
   if(proView.offers)return proView.offers;
@@ -1997,7 +2054,10 @@ function proCompareSection(rows,programs){
   const mode=proValueMode(net);
   const columns=programs?proRoomColumns(rows):[];
   const showTrip=rows.some(row=>proTripOf(row));
-  const headers=['العرض',...(showTrip?['الرحلة']:[]),...(programs?columns:['البنود','يبدأ من']),'الصلاحية','الحالة','الإجراءات'];
+  // The currency belongs in the header once, not repeated in every cell.
+  const currency=$(((rows[0]&&proOfferLines(rows[0]).lines[0])||{}).currency||'LYD');
+  const columnHead=label=>label+' · '+currency;
+  const headers=['العرض',...(showTrip?['الرحلة']:[]),...(programs?columns.map(columnHead):['البنود','يبدأ من · '+currency]),'الصلاحية','الحالة','الإجراءات'];
   // Narrow containers fold the trip and validity columns away rather than scrolling sideways.
   const optional=[];
   if(showTrip)optional.push(1);
@@ -2010,7 +2070,7 @@ function proCompareSection(rows,programs){
       const line=lines.find(x=>x.label===label);
       cells.push(line?`<span class="num">${ne(line[mode]??line.basePrice)}</span>`:'<span class="empty-cell">—</span>');
     });
-    else cells.push(String(lines.length),`<span class="num">${ne(proMinPrice(lines,mode))}</span> <small>${c($(lines[0]?.currency))}</small>`);
+    else cells.push(String(lines.length),`<span class="num">${ne(proMinPrice(lines,mode))}</span>`);
     cells.push(c(row.validUntil||'غير محددة'),proOfferStatus(row),proOfferActions(row));
     let index=0;
     const html=R(cells).replace(/<td>/g,()=>{
@@ -2027,7 +2087,8 @@ function proCompareSection(rows,programs){
     const cls=optional.includes(headIndex)?' class="col-optional"':'';
     headIndex++;return '<th'+cls+'>';
   });
-  return (programs?'<div class="compare-group">البرامج · سعر الفرد حسب نوع الغرفة</div>':'<div class="compare-group">الخدمات المستقلة</div>')+table;
+  const hint='<p class="scroll-hint">مرّر الجدول أفقياً لرؤية باقي الأعمدة · اسم العرض يبقى ثابتاً</p>';
+  return (programs?'<div class="compare-group">البرامج · سعر الفرد حسب نوع الغرفة</div>':'<div class="compare-group">الخدمات المستقلة</div>')+hint+table;
 }
 function proValueSwitch(rows){
   if(!rows.some(row=>proOfferLines(row).net))return '';
@@ -2359,6 +2420,245 @@ window.addEventListener('resize',()=>{
   if(form&&form.querySelector('.step-pane'))proSyncSteps(form);
 });
 /* END ARKAN PRO */
+
+/* ===== Release 4 ===== Quick pricing tab, company switches, readable table on phones. */
+const proOriginalCompanyForm=ze,proOriginalShell4=Qe,proOriginalAction4=Ri,proOriginalSubmit4=qi,proOriginalPageRender=gi;
+const proQuickModes=[['compact','مضغوط'],['bold','بارز'],['guided','إرشادي']];
+const proQuickState={mode:localStorage.getItem('rihla_quick_mode')||sessionStorage.getItem('rihla_quick_mode')||'bold',step:0,draft:null,input:null};
+
+/* ---- the company switches the admin could not reach before ---- */
+ze=function(row={active:true}){
+  proOriginalCompanyForm(row);
+  const active=d('#company-form .check-group')||d('#company-form [name=active]')?.closest('label');
+  if(!active)return;
+  // A hidden companion before each box: FormData keeps the last entry, so an unchecked box
+  // still sends "no" instead of vanishing and being read as "not false".
+  const toggle=(label,name,on)=>`<input type="hidden" name="${name}" value="no">${A(label,name,on,'yes')}`;
+  active.insertAdjacentHTML('afterend',`<div class="switch-group">${toggle('أداة التسعير الخاصة بالشركة','allowPricing',row.allowPricing!==false)}${toggle('التسعيرة السريعة','allowQuickPricing',row.allowQuickPricing!==false)}<p class="hint">إطفاء أي منهما يخفي تبويبه عن حسابات الشركة ويمنع الحساب والحفظ من الخادم. الحسابات المحفوظة تبقى وتعود عند إعادة التفعيل.</p></div>`);
+};
+
+/* ---- quick pricing ---- */
+function proQuickAllowed(){return b()?s.boot?.company?.allowQuickPricing!==false:L('viewCost');}
+function proQuickDefs(type){return (b()?proQuickCompanyDefs(type):(s.boot?.definitions||[]).filter(row=>row.type===type&&row.active!==false));}
+function proQuickCompanyDefs(){return [];}
+function proQuickCompanyRooms(){
+  const latest=(s.boot?.companyPricings||[]).find(row=>Array.isArray(row.rooms)&&row.rooms.length);
+  return latest?latest.rooms:[];
+}
+const PRO_DEFAULT_ROOMS=[{id:'q1',name:'فردية',occupancy:1,extraBeds:0},{id:'q2',name:'زوجية',occupancy:2,extraBeds:0},{id:'q3',name:'ثلاثية',occupancy:3,extraBeds:0},{id:'q4',name:'رباعية',occupancy:4,extraBeds:0}];
+function proQuickRooms(){
+  const rooms=b()?proQuickCompanyRooms():proQuickDefs('room');
+  return rooms.length?rooms:PRO_DEFAULT_ROOMS;
+}
+function proQuickSettings(){const settings=s.boot?.settings||{};return {sarPerUsd:settings.sarPerUsd||3.75,usdToLyd:settings.usdToLyd||4.85};}
+function proQuickInput(){
+  const get=name=>d('[name=q-'+name+']');
+  const num=name=>{const el=get(name);return el?Number(el.value||0):0;};
+  const rates=proQuickSettings();
+  return {
+    makkahHotelId:get('makkahHotelId')?.value||'',
+    makkahRate:num('makkahRate'),makkahNights:num('makkahNights'),
+    includeMadinah:!!get('includeMadinah')?.checked,
+    madinahHotelId:get('madinahHotelId')?.value||'',
+    madinahRate:num('madinahRate'),madinahNights:num('madinahNights'),
+    extraBed:num('extraBed'),visaUsd:num('visaUsd'),ticketLyd:num('ticketLyd'),
+    transportLyd:num('transportLyd'),otherLyd:num('otherLyd'),
+    profitType:get('profitType')?.value||'percent',profitValue:num('profitValue'),
+    rounding:num('rounding'),
+    sarPerUsd:num('sarPerUsd')||rates.sarPerUsd,usdToLyd:num('usdToLyd')||rates.usdToLyd,
+    serviceIds:[],overrides:{}
+  };
+}
+function proQuickRoomPayload(){
+  const rooms=proQuickRooms();
+  return b()?{rooms:rooms.map(row=>({id:row.id,name:row.name,occupancy:row.occupancy,extraBeds:row.extraBeds}))}:{roomIds:rooms.map(row=>row.id)};
+}
+function proQuickCompute(){
+  const rooms=proQuickRooms();
+  return {rooms,result:proCalcProgram(proQuickInput(),rooms,[])};
+}
+function proQuickSummaryText(view){
+  const hotel=proQuickDefs('hotel').find(row=>row.id===d('[name=q-makkahHotelId]')?.value);
+  const nights=Number(d('[name=q-makkahNights]')?.value||0);
+  const head=(hotel?hotel.name:'تسعيرة سريعة')+' — '+nights+' ليالٍ';
+  return head+'\n'+view.result.results.map(row=>row.label+': '+ne(row.sell)+' '+$(row.currency)).join('\n');
+}
+
+function proQuickHotelOptions(){
+  const hotels=proQuickDefs('hotel');
+  return [['','اختر الفندق أو أدخل السعر يدوياً'],...hotels.map(row=>[row.id,row.name+' · '+ne(row.rate)+' SAR/ليلة'])];
+}
+function proQuickForm(){
+  const rates=proQuickSettings();
+  const draft=proQuickState.input||proQuickState.draft?.input||{};
+  const v=(key,fallback)=>draft[key]!=null&&draft[key]!==''?draft[key]:fallback;
+  return `<div class="quick-strip" data-step="0">
+    ${y('فندق مكة','q-makkahHotelId',proQuickHotelOptions(),v('makkahHotelId',''))}
+    <div class="quick-two">${m('سعر الغرفة / الليلة (SAR)','q-makkahRate',v('makkahRate',0))}${m('عدد الليالي','q-makkahNights',v('makkahNights',10),'min="1" max="365" step="1"')}</div>
+    ${proNightQuick('q-makkahNights',v('makkahNights',10))}
+  </div>
+  <div class="quick-strip" data-step="1">
+    <div class="quick-two">${y('طريقة الربح','q-profitType',[['percent','نسبة %'],['fixed','مبلغ ثابت']],v('profitType','percent'))}${m('قيمة الربح','q-profitValue',v('profitValue',15))}</div>
+  </div>
+  <details class="quick-extra" data-step="2" ${draft.includeMadinah||draft.visaUsd||draft.ticketLyd?'open':''}>
+    <summary>تكاليف إضافية · التأشيرة والتذكرة والنقل والمدينة المنورة</summary>
+    <div class="quick-extra-body">
+      ${A('يشمل المدينة المنورة','q-includeMadinah',!!draft.includeMadinah)}
+      <div class="quick-two">${y('فندق المدينة','q-madinahHotelId',proQuickHotelOptions(),v('madinahHotelId',''))}${m('سعر الليلة (SAR)','q-madinahRate',v('madinahRate',0))}</div>
+      <div class="quick-two">${m('ليالي المدينة','q-madinahNights',v('madinahNights',0),'min="0" max="365" step="1"')}${m('سرير إضافي (SAR)','q-extraBed',v('extraBed',0))}</div>
+      <div class="quick-two">${m('التأشيرة (USD)','q-visaUsd',v('visaUsd',0))}${m('التذكرة (LYD)','q-ticketLyd',v('ticketLyd',0))}</div>
+      <div class="quick-two">${m('النقل (LYD)','q-transportLyd',v('transportLyd',0))}${m('أخرى (LYD)','q-otherLyd',v('otherLyd',0))}</div>
+      <div class="quick-two">${m('الريال مقابل الدولار','q-sarPerUsd',v('sarPerUsd',rates.sarPerUsd),'step="0.0001"')}${m('الدولار مقابل الدينار','q-usdToLyd',v('usdToLyd',rates.usdToLyd),'step="0.0001"')}</div>
+      ${m('التقريب لأقرب','q-rounding',v('rounding',5))}
+    </div>
+  </details>`;
+}
+function proQuickPrices(view){
+  const rows=view.result.results||[];
+  if(!rows.length)return '<div class="live-error">لا توجد أنواع غرف معرّفة.</div>';
+  const lead=rows.reduce((best,row)=>!best||Math.abs(row.count-2)<Math.abs(best.count-2)?row:best,null);
+  return rows.map(row=>{
+    const below=row.sell<row.baseCost;
+    return `<div class="quick-card${row===lead?' lead':''}${below?' below':''}"><span class="quick-card-label">${c(row.label)} · للفرد</span><strong class="num">${ne(row.sell)} ${c($(row.currency))}</strong><small>تكلفة ${ne(row.baseCost)} · ربح ${ne(row.profit)}${below?' · تحت التكلفة':''}</small></div>`;
+  }).join('');
+}
+function proQuickRender(){
+  if(d('#quick-form'))proQuickState.input=proQuickInput();
+  let view=null,error='';
+  try{view=proQuickCompute();}catch(e){error=e.message||String(e);}
+  const prices=d('#quick-prices');
+  if(prices)prices.innerHTML=view?proQuickPrices(view):`<div class="live-error">${c(error)}</div>`;
+  const copy=d('#quick-copy');
+  if(copy)copy.disabled=!view;
+  proQuickSyncSteps();
+}
+function proQuickSyncSteps(){
+  const panes=x('#quick-form [data-step]');
+  if(!panes.length)return;
+  const guided=proQuickState.mode==='guided';
+  const step=Math.min(proQuickState.step,panes.length-1);
+  panes.forEach((pane,index)=>{pane.hidden=guided&&index!==step;});
+  const head=d('#quick-step-head');
+  if(head){
+    head.hidden=!guided;
+    head.innerHTML=guided?`<div class="step-bar">${panes.map((p,i)=>`<i class="${i<=step?'done':''}"></i>`).join('')}</div><div class="step-index">خطوة ${step+1} من ${panes.length}</div>`:'';
+  }
+  const nav=d('#quick-nav');
+  if(nav)nav.innerHTML=guided?`${step>0?'<button type="button" class="btn" data-pro="quick-step" data-value="-1">السابق</button>':''}${step<panes.length-1?'<button type="button" class="btn primary" data-pro="quick-step" data-value="1">التالي</button>':''}`:'';
+}
+function proQuickDraftList(){
+  const drafts=s.boot?.quickDrafts||[];
+  if(!drafts.length)return '<p class="hint">لا توجد مسودات محفوظة. تُحفظ المسودة 30 يوماً ثم تُحذف تلقائياً.</p>';
+  return M(['المسودة','آخر تحديث','الإجراءات'],drafts.map(row=>R([
+    `<b>${c(row.name)}</b>`,
+    c(String(row.updatedAt||'').replace('T',' ').slice(0,16)),
+    V(l('فتح','quick.open',row.id,'small')+l('حذف','quick.delete',row.id,'small danger'))
+  ])));
+}
+function proQuickPage(){
+  d('#content').innerHTML=Y('التسعيرة السريعة','سعر فوري لزبون على الهاتف أو أمامك. بلا عرض ولا رحلة ولا نشر.',
+    l('تسعيرة جديدة','quick.reset','','primary'))+
+  `<div class="quick-modes" role="group" aria-label="وضع العرض">${proQuickModes.map(([id,label])=>`<button type="button" data-pro="quick-mode" data-value="${id}" aria-pressed="${proQuickState.mode===id}">${label}</button>`).join('')}</div>
+  <div class="quick-layout mode-${c(proQuickState.mode)}">
+    <div class="quick-inputs panel"><div id="quick-step-head" class="step-head" hidden></div><form id="quick-form" autocomplete="off">${proQuickForm()}</form><div id="quick-nav" class="step-nav"></div></div>
+    <div class="quick-results">
+      <div id="quick-prices"></div>
+      <div class="quick-actions">
+        <button type="button" class="btn" id="quick-copy" data-pro="quick-copy">نسخ للزبون</button>
+        ${l('حفظ مسودة','quick.draft','','primary')}
+      </div>
+    </div>
+  </div>
+  <div class="panel section"><div class="toolbar"><h3>المسودات المحفوظة</h3></div>${proQuickDraftList()}</div>`;
+  proQuickRender();
+  proUpgradeActions();
+}
+
+/* ---- wiring the tab into the shell ---- */
+/* The bundle's own shell resets any tab it does not know to "offers", so the quick tab is
+   restored after the shell is built rather than fought with. */
+Qe=function(){
+  const wanted=s.tab==='quickPricing'&&proQuickAllowed();
+  proOriginalShell4();
+  const nav=d('.nav');
+  if(nav&&proQuickAllowed()&&!nav.querySelector('[data-id="quickPricing"]')){
+    const anchor=nav.querySelector('[data-id="companyPricing"]')||nav.querySelector('[data-id="pricing"]')||nav.querySelector('[data-id="offers"]');
+    anchor?.insertAdjacentHTML('afterend','<button type="button" data-action="navigate" data-id="quickPricing">التسعيرة السريعة</button>');
+  }
+  if(!wanted)return;
+  s.tab='quickPricing';
+  x('.nav button').forEach(button=>button.classList.toggle('active',button.dataset.id==='quickPricing'));
+  proQuickPage();
+};
+gi=function(){
+  if(s.tab==='quickPricing'){proQuickPage();return;}
+  proOriginalPageRender();
+};
+Ri=async function(action,id,el){
+  switch(action){
+    case'quick.reset':proQuickState.draft=null;proQuickState.input=null;proQuickState.step=0;proQuickPage();return;
+    case'quick.open':{
+      const row=(s.boot.quickDrafts||[]).find(x=>x.id===id);
+      if(!row){q('المسودة غير متاحة.');return;}
+      proQuickState.draft=row;proQuickState.input=null;proQuickState.step=0;proQuickPage();
+      q('فُتحت المسودة «'+row.name+'».');return;
+    }
+    case'quick.draft':{
+      const name=prompt('اسم المسودة',proQuickState.draft?.name||'تسعيرة '+new Date().toLocaleDateString('ar-LY'));
+      if(name==null)return;
+      const saved=await v('quick.save',{id:proQuickState.draft?.id,version:proQuickState.draft?.version,name,notes:'',kind:'program',quick:true,input:proQuickInput(),...proQuickRoomPayload()});
+      s.boot.quickDrafts=[saved,...(s.boot.quickDrafts||[]).filter(row=>row.id!==saved.id)];
+      proQuickState.draft=saved;proQuickState.input=null;proQuickPage();q('حُفظت المسودة. تنتهي تلقائياً بعد 30 يوماً.');return;
+    }
+    case'quick.delete':{
+      const row=(s.boot.quickDrafts||[]).find(x=>x.id===id);
+      if(!row)return;
+      if(!confirm('حذف المسودة «'+row.name+'»؟'))return;
+      await v('quick.delete',{id:row.id,version:row.version});
+      s.boot.quickDrafts=(s.boot.quickDrafts||[]).filter(x=>x.id!==row.id);
+      if(proQuickState.draft?.id===row.id)proQuickState.draft=null;
+      proQuickPage();q('حُذفت المسودة.');return;
+    }
+  }
+  return proOriginalAction4(action,id,el);
+};
+function proQuickHandle(own){
+  switch(own.dataset.pro){
+    case'quick-mode':
+      proQuickState.input=d('#quick-form')?proQuickInput():proQuickState.input;
+      proQuickState.mode=own.dataset.value;proQuickState.step=0;
+      try{localStorage.setItem('rihla_quick_mode',own.dataset.value);}catch(e){sessionStorage.setItem('rihla_quick_mode',own.dataset.value);}
+      proQuickPage();return true;
+    case'quick-step':
+      proQuickState.step=Math.max(0,proQuickState.step+Number(own.dataset.value));
+      proQuickSyncSteps();return true;
+    case'quick-copy':{
+      let view=null;
+      try{view=proQuickCompute();}catch(e){q('أكمل المدخلات أولاً.');return true;}
+      const text=proQuickSummaryText(view);
+      const done=()=>{own.textContent='نُسخ ✓';setTimeout(()=>{own.textContent='نسخ للزبون';},1600);};
+      if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(done).catch(()=>q(text));
+      else q(text);
+      return true;
+    }
+  }
+  return false;
+}
+const proBaseHandleAction=proHandleAction;
+proHandleAction=function(own){if(proQuickHandle(own))return;return proBaseHandleAction(own);};
+document.addEventListener('input',event=>{
+  if(event.target.closest('#quick-form'))proQuickRender();
+},true);
+document.addEventListener('change',event=>{
+  if(!event.target.closest('#quick-form'))return;
+  const hotelField=event.target.name==='q-makkahHotelId'?'q-makkahRate':event.target.name==='q-madinahHotelId'?'q-madinahRate':'';
+  if(hotelField){
+    const hotel=proQuickDefs('hotel').find(row=>row.id===event.target.value);
+    if(hotel&&d('[name='+hotelField+']'))d('[name='+hotelField+']').value=hotel.rate;
+  }
+  proQuickRender();
+});
+/* END ARKAN PRO R4 */
 
 s.token?z().catch(e=>{ce(),Le(e)}):ce();})();
 </script><style>/* Tajawal, subset to Arabic + Latin + digits and converted to WOFF2. Loaded after first
