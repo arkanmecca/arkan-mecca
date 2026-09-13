@@ -1566,6 +1566,79 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
  .quick-actions{position:sticky;bottom:0;background:#fffffff5;backdrop-filter:blur(10px);padding:10px 0;margin:0}
  .switch-group{padding:11px 12px}
 }
+
+/* ===== Release 5 — hotel cards, negotiation, presets, share card, phone offers table ===== */
+.hotel-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:14px}
+.hotel-card{border:1px solid var(--line);border-radius:12px;background:#fcfafb;padding:13px 15px}
+.hotel-card-head{display:flex;justify-content:space-between;align-items:center;gap:9px;margin-bottom:11px}
+.hotel-card-head b{font-size:.93rem;color:var(--teal)}
+.hotel-card-head span{font-size:.73rem;color:var(--muted)}
+.hotel-card.is-off{background:#f6f2f4}
+.hotel-card.is-off .hotel-card-head b{color:var(--muted)}
+.hotel-card .grid{margin:0}
+.quick-strip .hint{font-size:.78rem;color:var(--muted);margin-top:-4px}
+.preset-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin-bottom:16px}
+.preset{position:relative;border:1px solid var(--line);border-radius:12px;background:#fff;padding:11px 13px;text-align:start;cursor:pointer;min-height:66px}
+.preset:hover{border-color:var(--teal)}
+.preset b{display:block;font-size:.87rem;color:var(--teal)}
+.preset small{display:block;font-size:.73rem;color:var(--muted);margin-top:2px}
+.preset .num{position:absolute;inset-block-start:11px;inset-inline-end:13px;font-size:.87rem;font-weight:800}
+.preset i{position:absolute;inset-block-end:8px;inset-inline-end:10px;font-style:normal;font-size:.76rem;color:var(--muted);cursor:pointer;padding:3px 6px;border-radius:6px}
+.preset i:hover{background:#f4e9ec;color:var(--red)}
+.preset-add{border-style:dashed;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:.83rem}
+.floor-line{display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:#fdf4f5;border:1px solid #f0d3d8;border-radius:11px;padding:10px 13px;margin-top:12px;font-size:.83rem;color:#9d3b4e}
+.floor-line input{width:72px;text-align:center;padding:6px}
+.chips-inline{display:flex;gap:6px;flex-wrap:wrap;margin-inline-start:auto}
+.chips-inline .chip{min-height:34px;padding:5px 12px;font-size:.78rem}
+.neg-row{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 14px;margin-bottom:10px}
+.neg-head{display:grid;grid-template-columns:1.15fr 1.1fr .9fr;gap:10px;align-items:center}
+.neg-name{font-size:.89rem;color:var(--muted)}
+.neg-name small{display:block;font-size:.73rem;margin-top:2px}
+.neg-head input{width:100%;text-align:center;font-size:1.05rem;font-weight:800;padding:7px}
+.neg-profit{text-align:end;font-size:.95rem;font-weight:800;color:#2f7a52}
+.neg-profit small{display:block;font-size:.72rem;font-weight:500}
+.neg-row.is-low .neg-profit{color:#a8761f}
+.neg-row.is-bad .neg-profit{color:var(--red)}
+.neg-row.is-bad{border-color:var(--red)}
+.neg-bar{height:7px;border-radius:4px;background:#ece5e8;margin-top:11px;position:relative;overflow:hidden}
+.neg-bar i{position:absolute;inset-block:0;inset-inline-start:0;border-radius:4px;background:#3f8f68}
+.neg-row.is-low .neg-bar i{background:#d4a03a}
+.neg-row.is-bad .neg-bar i{background:var(--red)}
+.neg-bar u{position:absolute;inset-block:-3px;width:2px;background:#9d3b4e;text-decoration:none}
+.neg-scale{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:4px}
+.neg-advice{margin-top:10px;background:#fdf4f5;border-radius:9px;padding:9px 11px;font-size:.79rem;color:#9d3b4e;line-height:1.8}
+.neg-advice .btn{margin:6px 0 0}
+.cust-view{border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
+.cust-row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 16px;border-top:1px solid var(--line)}
+.cust-row:first-child{border-top:0}
+.cust-row b{font-size:1.5rem;font-weight:800;color:var(--teal)}
+.share-card img{width:100%;border-radius:12px;border:1px solid var(--line)}
+.quick-shortcut{margin:0 0 0 10px;background:var(--teal);color:#fff;border-color:var(--teal);min-height:38px;padding:7px 14px;font-size:.83rem;font-weight:700;white-space:nowrap}
+.quick-shortcut:hover{background:#5a2329;color:#fff}
+.quick-shortcut.is-active{background:var(--gold);border-color:var(--gold)}
+.room-chips{margin-bottom:11px}
+.narrow-table{border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
+.narrow-head,.narrow-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:11px 13px}
+.narrow-head{background:#f7f4f6;font-size:.75rem;color:var(--muted);border-bottom:1px solid var(--line)}
+.narrow-row{border-top:1px solid var(--line)}
+.narrow-row:first-of-type{border-top:0}
+.narrow-row.is-archived{opacity:.66}
+.narrow-main b{display:block;font-size:.9rem;line-height:1.5}
+.narrow-main small{display:block;font-size:.73rem;color:var(--muted);margin-top:2px}
+.narrow-price .num{font-size:1.05rem;font-weight:800;white-space:nowrap}
+@media(max-width:760px){
+ .hotel-cards{grid-template-columns:minmax(0,1fr);gap:10px}
+ .preset-row{grid-template-columns:minmax(0,1fr)}
+ .neg-head{grid-template-columns:1fr 1fr;row-gap:8px}
+ .neg-profit{grid-column:2}
+ .neg-name{grid-column:1}
+ .neg-head>span:nth-child(2){grid-column:1/-1;order:3}
+ .floor-line{font-size:.79rem}
+ .chips-inline{margin-inline-start:0;width:100%}
+ .chips-inline .chip{flex:1}
+ .quick-shortcut{padding:7px 11px;font-size:.78rem;margin-inline-start:8px}
+ .cust-row b{font-size:1.3rem}
+}
 </style><!-- Tajawal font license
 Copyright 2018 Boutros International. (http://www.boutrosfonts.com)
 
@@ -2145,6 +2218,7 @@ function proNarrow(){return innerWidth<=760;}
 function proSnapshotDefs(){return [...new Map([...(s.boot?.definitions||[]),...(s.editor?.row?.definitionsSnapshot||[])].map(row=>[row.id,row])).values()];}
 function proLivePricing(){
   const payload=ei(),defs=proSnapshotDefs();
+  payload.input=proMadinahFromNights(payload.input);
   if(payload.kind==='program'){
     const rooms=payload.roomIds.map(id=>defs.find(row=>row.id===id&&row.type==='room')).filter(Boolean);
     return {kind:'program',result:proCalcProgram(payload.input,rooms,defs.filter(row=>row.type==='service'))};
@@ -2153,6 +2227,7 @@ function proLivePricing(){
 }
 function proLiveCompanyPricing(){
   const payload=ti();
+  payload.input=proMadinahFromNights(payload.input);
   if(payload.kind==='program')return {kind:'program',result:proCalcProgram(payload.input,payload.rooms,[])};
   return {kind:'service',result:proCalcService(payload.input,{...payload.service,active:true})};
 }
@@ -2267,6 +2342,7 @@ const proBasePricingPayload=ei;
 ei=function(){
   const payload=proBasePricingPayload();
   payload.tripId=d('[name=tripId]')?.value||'';
+  payload.input=proMadinahFromNights(payload.input);
   return payload;
 };
 Te=function(row){
@@ -2423,8 +2499,9 @@ window.addEventListener('resize',()=>{
 
 /* ===== Release 4 ===== Quick pricing tab, company switches, readable table on phones. */
 const proOriginalCompanyForm=ze,proOriginalShell4=Qe,proOriginalAction4=Ri,proOriginalSubmit4=qi,proOriginalPageRender=gi;
-const proQuickModes=[['compact','مضغوط'],['bold','بارز'],['guided','إرشادي']];
-const proQuickState={mode:localStorage.getItem('rihla_quick_mode')||sessionStorage.getItem('rihla_quick_mode')||'bold',step:0,draft:null,input:null};
+const proQuickModes=[['compact','مضغوط'],['negotiate','تفاوض'],['guided','إرشادي']];
+function proQuickMode(value){return ['compact','negotiate','guided'].includes(value)?value:'negotiate';}
+const proQuickState={mode:proQuickMode(localStorage.getItem('rihla_quick_mode')||sessionStorage.getItem('rihla_quick_mode')),step:0,draft:null,input:null};
 
 /* ---- the company switches the admin could not reach before ---- */
 ze=function(row={active:true}){
@@ -2458,7 +2535,7 @@ function proQuickInput(){
   return {
     makkahHotelId:get('makkahHotelId')?.value||'',
     makkahRate:num('makkahRate'),makkahNights:num('makkahNights'),
-    includeMadinah:!!get('includeMadinah')?.checked,
+    includeMadinah:num('madinahNights')>0,
     madinahHotelId:get('madinahHotelId')?.value||'',
     madinahRate:num('madinahRate'),madinahNights:num('madinahNights'),
     extraBed:num('extraBed'),visaUsd:num('visaUsd'),ticketLyd:num('ticketLyd'),
@@ -2492,20 +2569,24 @@ function proQuickForm(){
   const rates=proQuickSettings();
   const draft=proQuickState.input||proQuickState.draft?.input||{};
   const v=(key,fallback)=>draft[key]!=null&&draft[key]!==''?draft[key]:fallback;
-  return `<div class="quick-strip" data-step="0">
-    ${y('فندق مكة','q-makkahHotelId',proQuickHotelOptions(),v('makkahHotelId',''))}
-    <div class="quick-two">${m('سعر الغرفة / الليلة (SAR)','q-makkahRate',v('makkahRate',0))}${m('عدد الليالي','q-makkahNights',v('makkahNights',10),'min="1" max="365" step="1"')}</div>
-    ${proNightQuick('q-makkahNights',v('makkahNights',10))}
+  return `<div class="quick-strip hotel-cards" data-step="0">
+    <section class="hotel-card"><div class="hotel-card-head"><b>فندق مكة</b><span>أساسي</span></div>
+      ${y('الفندق','q-makkahHotelId',proQuickHotelOptions(),v('makkahHotelId',''))}
+      <div class="quick-two">${m('سعر الغرفة / الليلة (SAR)','q-makkahRate',v('makkahRate',0))}${m('عدد الليالي','q-makkahNights',v('makkahNights',10),'min="1" max="365" step="1"')}</div>
+      ${proNightQuick('q-makkahNights',v('makkahNights',10))}
+    </section>
+    <section class="hotel-card" id="q-madinah-card"><div class="hotel-card-head"><b>فندق المدينة</b><span>اتركه صفراً إن لم يكن مشمولاً</span></div>
+      ${y('الفندق','q-madinahHotelId',proQuickHotelOptions(),v('madinahHotelId',''))}
+      <div class="quick-two">${m('سعر الغرفة / الليلة (SAR)','q-madinahRate',v('madinahRate',0))}${m('ليالي المدينة','q-madinahNights',v('madinahNights',0),'min="0" max="365" step="1"')}</div>
+    </section>
   </div>
   <div class="quick-strip" data-step="1">
     <div class="quick-two">${y('طريقة الربح','q-profitType',[['percent','نسبة %'],['fixed','مبلغ ثابت']],v('profitType','percent'))}${m('قيمة الربح','q-profitValue',v('profitValue',15))}</div>
   </div>
-  <details class="quick-extra" data-step="2" ${draft.includeMadinah||draft.visaUsd||draft.ticketLyd?'open':''}>
-    <summary>تكاليف إضافية · التأشيرة والتذكرة والنقل والمدينة المنورة</summary>
+  <details class="quick-extra" data-step="2" ${draft.visaUsd||draft.ticketLyd||draft.transportLyd||draft.otherLyd?'open':''}>
+    <summary>تكاليف إضافية · التأشيرة والتذكرة والنقل</summary>
     <div class="quick-extra-body">
-      ${A('يشمل المدينة المنورة','q-includeMadinah',!!draft.includeMadinah)}
-      <div class="quick-two">${y('فندق المدينة','q-madinahHotelId',proQuickHotelOptions(),v('madinahHotelId',''))}${m('سعر الليلة (SAR)','q-madinahRate',v('madinahRate',0))}</div>
-      <div class="quick-two">${m('ليالي المدينة','q-madinahNights',v('madinahNights',0),'min="0" max="365" step="1"')}${m('سرير إضافي (SAR)','q-extraBed',v('extraBed',0))}</div>
+      ${m('سرير إضافي (SAR)','q-extraBed',v('extraBed',0))}
       <div class="quick-two">${m('التأشيرة (USD)','q-visaUsd',v('visaUsd',0))}${m('التذكرة (LYD)','q-ticketLyd',v('ticketLyd',0))}</div>
       <div class="quick-two">${m('النقل (LYD)','q-transportLyd',v('transportLyd',0))}${m('أخرى (LYD)','q-otherLyd',v('otherLyd',0))}</div>
       <div class="quick-two">${m('الريال مقابل الدولار','q-sarPerUsd',v('sarPerUsd',rates.sarPerUsd),'step="0.0001"')}${m('الدولار مقابل الدينار','q-usdToLyd',v('usdToLyd',rates.usdToLyd),'step="0.0001"')}</div>
@@ -2523,11 +2604,16 @@ function proQuickPrices(view){
   }).join('');
 }
 function proQuickRender(){
-  if(d('#quick-form'))proQuickState.input=proQuickInput();
+  if(d('#quick-form')){proQuickState.input=proQuickInput();proSyncMadinah(d('#quick-form'));}
   let view=null,error='';
   try{view=proQuickCompute();}catch(e){error=e.message||String(e);}
   const prices=d('#quick-prices');
-  if(prices)prices.innerHTML=view?proQuickPrices(view):`<div class="live-error">${c(error)}</div>`;
+  if(prices){
+    prices.innerHTML=!view?`<div class="live-error">${c(error)}</div>`
+      :proQuickExtra.customer?proCustomerRows(view)
+      :proQuickState.mode==='negotiate'?proNegotiateRows(view)
+      :proQuickPrices(view);
+  }
   const copy=d('#quick-copy');
   if(copy)copy.disabled=!view;
   proQuickSyncSteps();
@@ -2559,13 +2645,18 @@ function proQuickPage(){
   d('#content').innerHTML=Y('التسعيرة السريعة','سعر فوري لزبون على الهاتف أو أمامك. بلا عرض ولا رحلة ولا نشر.',
     l('تسعيرة جديدة','quick.reset','','primary'))+
   `<div class="quick-modes" role="group" aria-label="وضع العرض">${proQuickModes.map(([id,label])=>`<button type="button" data-pro="quick-mode" data-value="${id}" aria-pressed="${proQuickState.mode===id}">${label}</button>`).join('')}</div>
+  ${proPresetsMarkup()}
   <div class="quick-layout mode-${c(proQuickState.mode)}">
     <div class="quick-inputs panel"><div id="quick-step-head" class="step-head" hidden></div><form id="quick-form" autocomplete="off">${proQuickForm()}</form><div id="quick-nav" class="step-nav"></div></div>
     <div class="quick-results">
       <div id="quick-prices"></div>
+      ${proQuickState.mode==='negotiate'&&!proQuickExtra.customer?`<div class="floor-line">لا أقبل ربحاً أقل من <input type="number" id="quick-floor" value="${proQuickExtra.floorPct}" min="0" max="100" step="1" aria-label="أقل ربح مقبول"> ٪ <span class="chips-inline">${[['pct',5],['pct',10],['amt',100],['amt',250]].map(([kind,value])=>`<button type="button" class="chip" data-pro="quick-discount" data-kind="${kind}" data-value="${value}">${kind==='pct'?value+'٪':'−'+value}</button>`).join('')}<button type="button" class="chip" data-pro="quick-discount" data-kind="reset" data-value="0">إرجاع</button></span></div>`:''}
       <div class="quick-actions">
-        <button type="button" class="btn" id="quick-copy" data-pro="quick-copy">نسخ للزبون</button>
-        ${l('حفظ مسودة','quick.draft','','primary')}
+        <button type="button" class="btn" id="quick-copy" data-pro="quick-copy">نسخ نصاً</button>
+        <button type="button" class="btn primary" data-pro="quick-card">بطاقة مشاركة</button>
+        <button type="button" class="btn" data-pro="quick-customer">${proQuickExtra.customer?'عودة للتحرير':'اعرض للزبون'}</button>
+        ${l('حفظ مسودة','quick.draft')}
+        ${l('تحويل إلى عرض','quick.promote')}
       </div>
     </div>
   </div>
@@ -2659,6 +2750,361 @@ document.addEventListener('change',event=>{
   proQuickRender();
 });
 /* END ARKAN PRO R4 */
+
+/* ===== Release 5 ===== Madinah as a first-class card, negotiation mode, presets, share card. */
+const proR5={submit:qi,action:Ri,pricing:be,cpPricing:Te,list:ve,shell:Qe,handle:proHandleAction};
+
+/* ---- Madinah: always visible, always editable. Nights decide inclusion, so a record saved
+   with the old flag off opens at zero nights and keeps exactly the price it had. ---- */
+function proMadinahFromNights(input){
+  const nights=Number(input.madinahNights||0);
+  return {...input,madinahNights:nights,includeMadinah:nights>0};
+}
+function proNormaliseStored(input){
+  if(!input)return input;
+  return input.includeMadinah===true?input:{...input,madinahNights:0};
+}
+function proHotelCard(title,badge,fields){
+  return `<section class="hotel-card"><div class="hotel-card-head"><b>${c(title)}</b><span>${c(badge)}</span></div><div class="grid three">${fields}</div></section>`;
+}
+function proRestructureHotels(form){
+  // The two forms name the block differently and place the old checkbox differently, so the
+  // rebuild works from the fields themselves rather than from a fixed DOM shape.
+  if(!form||form.querySelector('.hotel-card'))return;
+  const madinah=form.querySelector('#madinah-inputs,#cp-madinah');
+  const makkahGrid=form.querySelector('[name=makkahNights]')?.closest('.grid');
+  if(!madinah||!makkahGrid||makkahGrid===madinah)return;
+  const wrap=document.createElement('div');
+  wrap.className='hotel-cards';
+  makkahGrid.parentNode.insertBefore(wrap,makkahGrid);
+  const card=(title,badge,node)=>{
+    const section=document.createElement('section');
+    section.className='hotel-card';
+    section.innerHTML=`<div class="hotel-card-head"><b>${c(title)}</b><span>${c(badge)}</span></div>`;
+    section.appendChild(node);
+    wrap.appendChild(section);
+  };
+  card('فندق مكة','أساسي',makkahGrid);
+  card('فندق المدينة','اتركه صفراً إن لم يكن مشمولاً',madinah);
+  madinah.hidden=false;
+  // The checkbox stays a real checkbox (FormData only reports it when checked) but is hidden;
+  // its state is derived from the nights field on every keystroke.
+  const box=form.querySelector('[name=includeMadinah]');
+  if(box){
+    box.closest('label')?.setAttribute('hidden','');
+    box.closest('.check-group')?.setAttribute('hidden','');
+  }
+  proSyncMadinah(form);
+}
+function proSyncMadinah(form){
+  const field=form.querySelector('[name=madinahNights],[name=q-madinahNights]');
+  const nights=Number(field?.value||0);
+  const box=form.querySelector('[name=includeMadinah]');
+  if(box)box.checked=nights>0;
+  (field?.closest('.hotel-card')||form.querySelector('#madinah-inputs,#cp-madinah')?.closest('.hotel-card'))?.classList.toggle('is-off',nights<=0);
+}
+
+/* Opening an old record: a stored flag of false meant "ignore these nights", so the field opens
+   at zero and the saved price is reproduced exactly. */
+be=function(row){
+  const safe=row?{...row,input:proNormaliseStored(row.input)}:row;
+  proR5.pricing(safe);
+  proRestructureHotels(d('#pricing-form'));
+  proRenderLive(proLivePricing);
+};
+Te=function(row){
+  const safe=row?{...row,input:proNormaliseStored(row.input)}:row;
+  proR5.cpPricing(safe);
+  proRestructureHotels(d('#cp-form'));
+  proRenderLive(proLiveCompanyPricing);
+};
+const proBaseCompanyPayload=ti;
+ti=function(){
+  const payload=proBaseCompanyPayload();
+  payload.input=proMadinahFromNights(payload.input);
+  return payload;
+};
+document.addEventListener('input',event=>{
+  const form=event.target.closest('#pricing-form,#cp-form');
+  if(form&&event.target.name==='madinahNights')proSyncMadinah(form);
+},true);
+
+/* ---- quick pricing: presets, negotiation, customer view, share card ---- */
+const proQuickExtra={floorPct:8,sells:{},customer:false,card:false};
+function proQuickPresets(){
+  try{return JSON.parse(localStorage.getItem('rihla_presets')||'[]');}catch(e){return [];}
+}
+function proSavePresets(list){
+  try{localStorage.setItem('rihla_presets',JSON.stringify(list.slice(0,8)));}catch(e){}
+}
+function proPresetPrice(preset){
+  try{
+    const rooms=proQuickRooms();
+    const result=proCalcProgram(proMadinahFromNights({...preset.input}),rooms,[]);
+    const values=(result.results||[]).map(row=>row.sell).filter(Number.isFinite);
+    return values.length?Math.min(...values):0;
+  }catch(e){return 0;}
+}
+function proPresetsMarkup(){
+  const presets=proQuickPresets();
+  return `<div class="preset-row">${presets.map((preset,index)=>`<button type="button" class="preset" data-pro="preset" data-value="${index}"><b>${c(preset.name)}</b><small>${preset.input.makkahNights||0} ليالٍ${preset.input.madinahNights?' + '+preset.input.madinahNights+' بالمدينة':''} · ربح ${preset.input.profitValue||0}${preset.input.profitType==='fixed'?'':'٪'}</small><span class="num">من ${ne(proPresetPrice(preset))}</span><i data-pro="preset-remove" data-value="${index}" role="button" tabindex="0" aria-label="حذف القالب ${c(preset.name)}">✕</i></button>`).join('')}<button type="button" class="preset preset-add" data-pro="preset-save">＋ احفظ الإعداد الحالي كقالب</button></div>`;
+}
+function proQuickFloor(cost){return Math.ceil(cost*(1+proQuickExtra.floorPct/100)/5)*5;}
+function proNegotiateRows(view){
+  const rows=view.result.results||[];
+  if(!rows.length)return '<div class="live-error">لا توجد أنواع غرف معرّفة.</div>';
+  const hotels=proQuickDefs('hotel');
+  const current=Number(d('[name=q-makkahRate]')?.value||0);
+  return rows.map((row,index)=>{
+    const cost=row.baseCost,list=row.sell;
+    const sell=proQuickExtra.sells[index]!=null?proQuickExtra.sells[index]:list;
+    const profit=sell-cost,pct=cost>0?Math.round(profit/cost*100):0;
+    const floor=proQuickFloor(cost);
+    const span=Math.max(list*1.12-cost,1);
+    const fill=Math.max(0,Math.min(100,(sell-cost)/span*100));
+    const mark=Math.max(0,Math.min(100,(floor-cost)/span*100));
+    const state=sell<cost?'bad':sell<floor?'low':'';
+    let advice='';
+    if(sell<floor){
+      const cheaper=hotels.filter(hotel=>Number(hotel.rate)<current).sort((a,x)=>x.rate-a.rate)
+        .find(hotel=>{
+          const saved=(current-Number(hotel.rate))*Number(d('[name=q-makkahNights]')?.value||0)/(row.count||1)/Number(d('[name=q-sarPerUsd]')?.value||3.75)*Number(d('[name=q-usdToLyd]')?.value||4.85);
+          return sell>=proQuickFloor(cost-saved);
+        });
+      advice=cheaper
+        ? `<div class="neg-advice">تحت حدّك الأدنى (<b>${ne(floor)}</b>). بدل خفض ربحك: <b>${c(cheaper.name)}</b> يبقيك فوق الحد بهذا السعر. <button type="button" class="btn small" data-pro="quick-swap" data-value="${c(cheaper.id)}">حوّل إليه</button></div>`
+        : `<div class="neg-advice">تحت حدّك الأدنى (<b>${ne(floor)}</b>)، ولا يوجد فندق أرخص يحقق هذا السعر بربحك.</div>`;
+    }
+    return `<div class="neg-row${state?' is-'+state:''}"><div class="neg-head"><span class="neg-name">${c(row.label)}<small>تكلفة ${ne(cost)}</small></span><span><input type="number" data-neg="${index}" value="${Math.round(sell)}" step="5" aria-label="سعر بيع ${c(row.label)}"></span><span class="neg-profit">${profit<0?'−':'+'}${ne(Math.abs(profit))}<small>${pct}٪</small></span></div><div class="neg-bar"><i style="width:${fill}%"></i><u style="inset-inline-start:${mark}%"></u></div><div class="neg-scale"><span>${ne(cost)}</span><span>المعلن ${ne(list)}</span></div>${advice}</div>`;
+  }).join('');
+}
+function proCustomerRows(view){
+  return `<div class="cust-view">${(view.result.results||[]).map((row,index)=>{
+    const sell=proQuickExtra.sells[index]!=null?proQuickExtra.sells[index]:row.sell;
+    return `<div class="cust-row"><span>${c(row.label)}</span><b>${ne(sell)} ${c($(row.currency))}</b></div>`;
+  }).join('')}</div>`;
+}
+
+/* ---- share card: drawn on a canvas so it leaves as an image, not a screenshot ---- */
+function proShareLines(view){
+  return (view.result.results||[]).map((row,index)=>({
+    label:row.label,
+    value:ne(proQuickExtra.sells[index]!=null?proQuickExtra.sells[index]:row.sell)+' '+$(row.currency)
+  }));
+}
+function proShareSubtitle(){
+  const hotel=proQuickDefs('hotel').find(row=>row.id===d('[name=q-makkahHotelId]')?.value);
+  const makkah=Number(d('[name=q-makkahNights]')?.value||0);
+  const madinah=Number(d('[name=q-madinahNights]')?.value||0);
+  const parts=[];
+  if(hotel)parts.push(hotel.name);
+  if(makkah)parts.push(makkah+' ليالٍ بمكة');
+  if(madinah)parts.push(madinah+' بالمدينة');
+  return parts.join(' · ');
+}
+function proDrawShareCard(view){
+  return new Promise(resolve=>{
+    const lines=proShareLines(view);
+    const W=1080,pad=64,rowH=104,headH=300,footH=170;
+    const H=headH+rowH*lines.length+footH;
+    const canvas=document.createElement('canvas');
+    canvas.width=W;canvas.height=H;
+    const ctx=canvas.getContext('2d');
+    const ink='#2b2023',teal='#461a1f',paper='#f4ebdd',surface='#fffbf4',gold='#b88a44',muted='#75646a';
+    ctx.fillStyle=paper;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=teal;ctx.fillRect(0,0,W,headH);
+    ctx.fillStyle=gold;ctx.fillRect(0,headH-8,W,8);
+    const body=()=>{
+      ctx.direction='rtl';ctx.textAlign='right';
+      ctx.fillStyle=surface;
+      ctx.font='700 46px Tajawal, Tahoma, sans-serif';
+      ctx.fillText(s.boot?.settings?.name||'أركان مكة للخدمات السياحية',W-pad,headH-120);
+      ctx.font='400 30px Tajawal, Tahoma, sans-serif';
+      ctx.globalAlpha=.85;
+      ctx.fillText(proShareSubtitle()||'عرض أسعار',W-pad,headH-64);
+      ctx.globalAlpha=1;
+      lines.forEach((line,index)=>{
+        const y=headH+40+rowH*index;
+        ctx.fillStyle=surface;
+        ctx.fillRect(pad,y,W-pad*2,rowH-18);
+        ctx.fillStyle=muted;
+        ctx.font='400 34px Tajawal, Tahoma, sans-serif';
+        ctx.fillText(line.label,W-pad-32,y+58);
+        ctx.fillStyle=ink;ctx.textAlign='left';
+        ctx.font='700 42px Tajawal, Tahoma, sans-serif';
+        ctx.fillText(line.value,pad+32,y+58);
+        ctx.textAlign='right';
+      });
+      const fy=headH+rowH*lines.length+46;
+      ctx.fillStyle=muted;
+      ctx.font='400 26px Tajawal, Tahoma, sans-serif';
+      ctx.fillText('السعر للفرد بالدينار الليبي',W-pad,fy);
+      const until=new Date(Date.now()+14*864e5).toLocaleDateString('ar-LY');
+      ctx.fillText('هذا السعر ساري حتى '+until,W-pad,fy+42);
+      if(s.boot?.company?.contact||s.boot?.settings?.contact)ctx.fillText(String(s.boot.company?.contact||s.boot.settings.contact),W-pad,fy+84);
+      canvas.toBlob(blob=>resolve({blob,url:canvas.toDataURL('image/png')}),'image/png');
+    };
+    const logo=new Image();
+    logo.onload=()=>{
+      const h=92,w=logo.width/logo.height*h;
+      ctx.drawImage(logo,pad,44,w,h);
+      body();
+    };
+    logo.onerror=body;
+    logo.src=Ke;
+  });
+}
+async function proShareCard(){
+  let view=null;
+  try{view=proQuickCompute();}catch(e){q('أكمل المدخلات أولاً.');return;}
+  const {blob,url}=await proDrawShareCard(view);
+  const file=blob?new File([blob],'arkan-prices.png',{type:'image/png'}):null;
+  if(file&&navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:'عرض أسعار'});return;}catch(e){if(e&&e.name==='AbortError')return;}
+  }
+  D('بطاقة الأسعار',`<div class="share-card"><img src="${url}" alt="بطاقة أسعار جاهزة للمشاركة"><p class="hint">اضغط مطولاً على الصورة لحفظها أو مشاركتها، أو استخدم زر التنزيل.</p><div class="form-actions"><a class="btn primary" href="${url}" download="arkan-prices.png">تنزيل الصورة</a>${l('إغلاق','dialog.close')}</div></div>`);
+}
+
+/* ---- quick pricing actions ---- */
+function proQuickHandle2(own){
+  switch(own.dataset.pro){
+    case'preset':{
+      const preset=proQuickPresets()[Number(own.dataset.value)];
+      if(!preset)return true;
+      proQuickState.input={...preset.input};proQuickState.draft=null;proQuickExtra.sells={};
+      proQuickPage();q('طُبّق قالب «'+preset.name+'».');return true;
+    }
+    case'preset-remove':{
+      const list=proQuickPresets(),index=Number(own.dataset.value);
+      if(!list[index])return true;
+      if(!confirm('حذف القالب «'+list[index].name+'»؟'))return true;
+      list.splice(index,1);proSavePresets(list);proQuickPage();return true;
+    }
+    case'preset-save':{
+      const name=prompt('اسم القالب','قالب '+(proQuickPresets().length+1));
+      if(name==null||!name.trim())return true;
+      proSavePresets([{name:name.trim(),input:proQuickInput()},...proQuickPresets()]);
+      proQuickPage();q('حُفظ القالب على هذا الجهاز.');return true;
+    }
+    case'quick-discount':{
+      const kind=own.dataset.kind,value=Number(own.dataset.value);
+      if(kind==='reset'){proQuickExtra.sells={};proQuickRender();return true;}
+      let view=null;try{view=proQuickCompute();}catch(e){return true;}
+      (view.result.results||[]).forEach((row,index)=>{
+        const current=proQuickExtra.sells[index]!=null?proQuickExtra.sells[index]:row.sell;
+        proQuickExtra.sells[index]=kind==='pct'?Math.round(current*(1-value/100)/5)*5:current-value;
+      });
+      proQuickRender();return true;
+    }
+    case'quick-swap':{
+      const hotel=proQuickDefs('hotel').find(row=>row.id===own.dataset.value);
+      if(!hotel)return true;
+      const select=d('[name=q-makkahHotelId]'),rate=d('[name=q-makkahRate]');
+      if(select)select.value=hotel.id;
+      if(rate)rate.value=hotel.rate;
+      proQuickExtra.sells={};proQuickRender();q('حُوّل إلى '+hotel.name+'.');return true;
+    }
+    case'quick-customer':
+      proQuickExtra.customer=!proQuickExtra.customer;proQuickPage();return true;
+    case'quick-card':
+      proShareCard();return true;
+  }
+  return false;
+}
+const proQuickBaseHandle=proHandleAction;
+proHandleAction=function(own){if(proQuickHandle2(own))return;return proQuickBaseHandle(own);};
+document.addEventListener('input',event=>{
+  if(event.target.id==='quick-floor'){proQuickExtra.floorPct=Math.max(0,Number(event.target.value)||0);proQuickRender();return;}
+  const index=event.target.dataset&&event.target.dataset.neg;
+  if(index!=null){proQuickExtra.sells[index]=Number(event.target.value)||0;proQuickRender();}
+},true);
+const proQuickBaseAction=Ri;
+Ri=async function(action,id,el){
+  if(action==='quick.promote'){
+    const input=proQuickInput();
+    s.tab='pricing';Qe();
+    be({name:'',kind:'program',input,roomIds:proQuickRooms().map(row=>row.id),definitionsSnapshot:[]});
+    q('نُقلت الأرقام. أضف اسم التسعيرة والرحلة ثم احفظ.');
+    return;
+  }
+  if(action==='quick.reset')proQuickExtra.sells={};
+  return proQuickBaseAction(action,id,el);
+};
+
+/* ---- offers table on phones: one room type at a time, chosen by chips, no sideways scroll ---- */
+let proRoomFocus='';
+function proNarrowTable(rows,columns){
+  const pick=columns.includes(proRoomFocus)?proRoomFocus:columns[0];
+  const net=rows.some(row=>proOfferLines(row).net);
+  const mode=proValueMode(net);
+  const currency=$(((rows[0]&&proOfferLines(rows[0]).lines[0])||{}).currency||'LYD');
+  const chips=`<div class="chips room-chips" role="group" aria-label="نوع الغرفة">${columns.map(label=>`<button type="button" class="chip" data-pro="room-focus" data-value="${c(label)}" aria-pressed="${label===pick}">${c(label)}</button>`).join('')}</div>`;
+  const body=rows.map(row=>{
+    const line=proOfferLines(row).lines.find(item=>item.label===pick);
+    const trip=proTripOf(row);
+    return `<div class="narrow-row${row.archived?' is-archived':''}"><div class="narrow-main"><b>${c(row.name)}</b><small>${trip?c(trip)+' · ':''}${row.status==='approved'||b()?'متاح':'مسودة'}${row.validUntil?' · حتى '+c(row.validUntil):''}</small></div><div class="narrow-price">${line?`<span class="num">${ne(line[mode]??line.basePrice)}</span>`:'<span class="empty-cell">—</span>'}</div><div class="narrow-act">${proOfferActions(row)}</div></div>`;
+  }).join('');
+  return chips+`<div class="narrow-table"><div class="narrow-head"><span>العرض</span><span>${c(pick)} · ${c(currency)}</span><span></span></div>${body}</div>`;
+}
+const proWideCompare=proCompareSection;
+proCompareSection=function(rows,programs){
+  if(!rows.length)return '';
+  if(programs&&proNarrow()){
+    const columns=proRoomColumns(rows);
+    if(columns.length)return '<div class="compare-group">البرامج · سعر الفرد</div>'+proNarrowTable(rows,columns);
+  }
+  if(!programs&&proNarrow())return '<div class="compare-group">الخدمات المستقلة</div>'+proNarrowServices(rows);
+  return proWideCompare(rows,programs);
+};
+function proNarrowServices(rows){
+  const currency=$(((rows[0]&&proOfferLines(rows[0]).lines[0])||{}).currency||'LYD');
+  const net=rows.some(row=>proOfferLines(row).net);
+  const mode=proValueMode(net);
+  return `<div class="narrow-table"><div class="narrow-head"><span>الخدمة</span><span>يبدأ من · ${c(currency)}</span><span></span></div>${rows.map(row=>{
+    const lines=proOfferLines(row).lines;
+    return `<div class="narrow-row${row.archived?' is-archived':''}"><div class="narrow-main"><b>${c(row.name)}</b><small>${lines.length} بنود${row.validUntil?' · حتى '+c(row.validUntil):''}</small></div><div class="narrow-price"><span class="num">${ne(proMinPrice(lines,mode))}</span></div><div class="narrow-act">${proOfferActions(row)}</div></div>`;
+  }).join('')}</div>`;
+}
+const proR5Handle=proHandleAction;
+proHandleAction=function(own){
+  if(own.dataset.pro==='room-focus'){proRoomFocus=own.dataset.value;ve();return;}
+  return proR5Handle(own);
+};
+
+/* ---- tab label, top-bar shortcut, company quote delete ---- */
+Qe=function(){
+  proR5.shell();
+  const pricingTab=d('.nav button[data-id="pricing"]');
+  if(pricingTab)pricingTab.textContent='أداة التسعير والعروض';
+  const topbar=d('.topbar .inline');
+  if(topbar&&proQuickAllowed()&&!d('#quick-shortcut'))
+    topbar.insertAdjacentHTML('beforeend','<button type="button" id="quick-shortcut" class="btn quick-shortcut" data-action="navigate" data-id="quickPricing"><span aria-hidden="true">⚡</span> تسعيرة سريعة</button>');
+  d('#quick-shortcut')?.classList.toggle('is-active',s.tab==='quickPricing');
+};
+const proR5Action=Ri;
+Ri=async function(action,id,el){
+  if(action==='quote.delete'){
+    const quote=(s.boot.quotes||[]).find(row=>row.id===id);
+    if(!quote)return;
+    if(!confirm('حذف التسعيرة «'+quote.name+'» نهائياً؟ لا يمكن التراجع.'))return;
+    await v('quote.delete',{id:quote.id,version:quote.version});
+    s.boot.quotes=(s.boot.quotes||[]).filter(row=>row.id!==quote.id);
+    gi();q('حُذفت التسعيرة.');
+    return;
+  }
+  return proR5Action(action,id,el);
+};
+ve=function(){
+  proR5.list();
+  if(s.tab!=='quotes'||!b())return;
+  x('#list-results tbody tr').forEach(row=>{
+    const trigger=row.querySelector('[data-action="quote.archive"]');
+    const id=trigger?.dataset.id;
+    if(!id||row.querySelector('[data-action="quote.delete"]'))return;
+    trigger.insertAdjacentHTML('afterend',l('حذف','quote.delete',id,'small danger'));
+  });
+  proUpgradeActions();
+};
 
 s.token?z().catch(e=>{ce(),Le(e)}):ce();})();
 </script><style>/* Tajawal, subset to Arabic + Latin + digits and converted to WOFF2. Loaded after first
