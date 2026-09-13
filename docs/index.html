@@ -1638,6 +1638,34 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
  .quick-shortcut{padding:7px 11px;font-size:.78rem;margin-inline-start:8px}
  .cust-row b{font-size:1.3rem}
 }
+
+/* ===== Release 6 — saving state, extras toggle, floor switch, delete dialog, phone actions ===== */
+.btn.is-busy{opacity:.75;cursor:progress}
+.quick-extra>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none}
+.quick-extra>summary::-webkit-details-marker{display:none}
+.ex-title b{display:block;font-size:.88rem;color:var(--ink)}
+.ex-title small{display:block;font-size:.75rem;color:var(--muted);margin-top:2px}
+.ex-side{display:flex;align-items:center;gap:9px;flex:none}
+.ex-side b{font-size:.84rem;white-space:nowrap}
+.ex-label{font-size:.78rem;color:var(--teal);white-space:nowrap}
+.ex-arrow{font-size:1rem;color:var(--muted);transition:transform .18s}
+.quick-extra[open] .ex-arrow{transform:rotate(180deg)}
+.floor-switch{display:inline-flex;border:1px solid #e2c3c9;border-radius:8px;overflow:hidden}
+.floor-switch button{border:0;background:#fff;color:#9d3b4e;padding:5px 11px;font-size:.76rem;min-height:32px;cursor:pointer}
+.floor-switch button+button{border-inline-start:1px solid #e2c3c9}
+.floor-switch button[aria-pressed="true"]{background:#9d3b4e;color:#fff;font-weight:700}
+.usage-warn ul{margin:8px 0 10px;padding-inline-start:20px;font-size:.9rem;line-height:2}
+.usage-warn p{font-size:.92rem}
+@media(max-width:760px){
+ .quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:static;background:none;backdrop-filter:none;padding:0}
+ .quick-actions .btn{margin:0;min-height:46px}
+ .quick-actions .btn:nth-child(n+3){display:none}
+ .quick-actions.show-all .btn:nth-child(n+3){display:block}
+ .quick-more{grid-column:1/-1;border:1px dashed var(--line);background:transparent;color:var(--muted);border-radius:10px;min-height:42px;font-size:.83rem;cursor:pointer}
+ .floor-line{font-size:.78rem}
+ .floor-switch{margin-inline-start:auto}
+ .ex-side .ex-label{display:none}
+}
 </style><!-- Tajawal font license
 Copyright 2018 Boutros International. (http://www.boutrosfonts.com)
 
@@ -2583,7 +2611,7 @@ function proQuickForm(){
     <div class="quick-two">${y('طريقة الربح','q-profitType',[['percent','نسبة %'],['fixed','مبلغ ثابت']],v('profitType','percent'))}${m('قيمة الربح','q-profitValue',v('profitValue',15))}</div>
   </div>
   <details class="quick-extra" data-step="2" ${draft.visaUsd||draft.ticketLyd||draft.transportLyd||draft.otherLyd?'open':''}>
-    <summary>تكاليف إضافية · التأشيرة والتذكرة والنقل</summary>
+    <summary><span class="ex-title"><b>تكاليف إضافية</b><small id="quick-extra-sum">التأشيرة · التذكرة · النقل · أخرى</small></span><span class="ex-side"><b id="quick-extra-total"></b><span class="ex-label">إظهار التفاصيل</span><span class="ex-arrow" aria-hidden="true">▾</span></span></summary>
     <div class="quick-extra-body">
       ${m('سرير إضافي (SAR)','q-extraBed',v('extraBed',0))}
       <div class="quick-two">${m('التأشيرة (USD)','q-visaUsd',v('visaUsd',0))}${m('التذكرة (LYD)','q-ticketLyd',v('ticketLyd',0))}</div>
@@ -2649,13 +2677,14 @@ function proQuickPage(){
     <div class="quick-inputs panel"><div id="quick-step-head" class="step-head" hidden></div><form id="quick-form" autocomplete="off">${proQuickForm()}</form><div id="quick-nav" class="step-nav"></div></div>
     <div class="quick-results">
       <div id="quick-prices"></div>
-      ${proQuickState.mode==='negotiate'&&!proQuickExtra.customer?`<div class="floor-line">لا أقبل ربحاً أقل من <input type="number" id="quick-floor" value="${proQuickExtra.floorPct}" min="0" max="100" step="1" aria-label="أقل ربح مقبول"> ٪ <span class="chips-inline">${[['pct',5],['pct',10],['amt',100],['amt',250]].map(([kind,value])=>`<button type="button" class="chip" data-pro="quick-discount" data-kind="${kind}" data-value="${value}">${kind==='pct'?value+'٪':'−'+value}</button>`).join('')}<button type="button" class="chip" data-pro="quick-discount" data-kind="reset" data-value="0">إرجاع</button></span></div>`:''}
+      ${proQuickState.mode==='negotiate'&&!proQuickExtra.customer?`<div class="floor-line">لا أقبل ربحاً أقل من <input type="number" id="quick-floor" value="${proQuickExtra.floorValue}" min="0" step="1" aria-label="أقل ربح مقبول"> <span class="floor-switch" role="group" aria-label="وحدة الحد الأدنى"><button type="button" data-pro="floor-mode" data-value="percent" aria-pressed="${proQuickExtra.floorMode==='percent'}">٪</button><button type="button" data-pro="floor-mode" data-value="fixed" aria-pressed="${proQuickExtra.floorMode==='fixed'}">د.ل للفرد</button></span> <span class="chips-inline">${[['pct',5],['pct',10],['amt',100],['amt',250]].map(([kind,value])=>`<button type="button" class="chip" data-pro="quick-discount" data-kind="${kind}" data-value="${value}">${kind==='pct'?value+'٪':'−'+value}</button>`).join('')}<button type="button" class="chip" data-pro="quick-discount" data-kind="reset" data-value="0">إرجاع</button></span></div>`:''}
       <div class="quick-actions">
         <button type="button" class="btn" id="quick-copy" data-pro="quick-copy">نسخ نصاً</button>
         <button type="button" class="btn primary" data-pro="quick-card">بطاقة مشاركة</button>
         <button type="button" class="btn" data-pro="quick-customer">${proQuickExtra.customer?'عودة للتحرير':'اعرض للزبون'}</button>
         ${l('حفظ مسودة','quick.draft')}
         ${l('تحويل إلى عرض','quick.promote')}
+        <button type="button" class="quick-more" data-pro="quick-more">المزيد من الإجراءات</button>
       </div>
     </div>
   </div>
@@ -2686,17 +2715,19 @@ gi=function(){
 };
 Ri=async function(action,id,el){
   switch(action){
-    case'quick.reset':proQuickState.draft=null;proQuickState.input=null;proQuickState.step=0;proQuickPage();return;
+    case'quick.reset':proQuickState.draft=null;proQuickState.input=null;proQuickState.step=0;proQuickExtra.sells={};proQuickPage();return;
     case'quick.open':{
       const row=(s.boot.quickDrafts||[]).find(x=>x.id===id);
       if(!row){q('المسودة غير متاحة.');return;}
-      proQuickState.draft=row;proQuickState.input=null;proQuickState.step=0;proQuickPage();
+      proQuickState.draft=row;proQuickState.input=null;proQuickState.step=0;
+      proRestoreNegotiation(row);
+      proQuickPage();
       q('فُتحت المسودة «'+row.name+'».');return;
     }
     case'quick.draft':{
       const name=prompt('اسم المسودة',proQuickState.draft?.name||'تسعيرة '+new Date().toLocaleDateString('ar-LY'));
       if(name==null)return;
-      const saved=await v('quick.save',{id:proQuickState.draft?.id,version:proQuickState.draft?.version,name,notes:'',kind:'program',quick:true,input:proQuickInput(),...proQuickRoomPayload()});
+      const saved=await v('quick.save',{id:proQuickState.draft?.id,version:proQuickState.draft?.version,name,notes:JSON.stringify({sells:proQuickExtra.sells,floorMode:proQuickExtra.floorMode,floorValue:proQuickExtra.floorValue}),kind:'program',quick:true,input:proQuickInput(),...proQuickRoomPayload()});
       s.boot.quickDrafts=[saved,...(s.boot.quickDrafts||[]).filter(row=>row.id!==saved.id)];
       proQuickState.draft=saved;proQuickState.input=null;proQuickPage();q('حُفظت المسودة. تنتهي تلقائياً بعد 30 يوماً.');return;
     }
@@ -2829,7 +2860,12 @@ document.addEventListener('input',event=>{
 },true);
 
 /* ---- quick pricing: presets, negotiation, customer view, share card ---- */
-const proQuickExtra={floorPct:8,sells:{},customer:false,card:false};
+const proQuickExtra={floorMode:'percent',floorValue:8,sells:{},customer:false,card:false};
+function proQuickFloorOf(cost){
+  return proQuickExtra.floorMode==='fixed'
+    ? Math.ceil((cost+proQuickExtra.floorValue)/5)*5
+    : Math.ceil(cost*(1+proQuickExtra.floorValue/100)/5)*5;
+}
 function proQuickPresets(){
   try{return JSON.parse(localStorage.getItem('rihla_presets')||'[]');}catch(e){return [];}
 }
@@ -2848,7 +2884,7 @@ function proPresetsMarkup(){
   const presets=proQuickPresets();
   return `<div class="preset-row">${presets.map((preset,index)=>`<button type="button" class="preset" data-pro="preset" data-value="${index}"><b>${c(preset.name)}</b><small>${preset.input.makkahNights||0} ليالٍ${preset.input.madinahNights?' + '+preset.input.madinahNights+' بالمدينة':''} · ربح ${preset.input.profitValue||0}${preset.input.profitType==='fixed'?'':'٪'}</small><span class="num">من ${ne(proPresetPrice(preset))}</span><i data-pro="preset-remove" data-value="${index}" role="button" tabindex="0" aria-label="حذف القالب ${c(preset.name)}">✕</i></button>`).join('')}<button type="button" class="preset preset-add" data-pro="preset-save">＋ احفظ الإعداد الحالي كقالب</button></div>`;
 }
-function proQuickFloor(cost){return Math.ceil(cost*(1+proQuickExtra.floorPct/100)/5)*5;}
+function proQuickFloor(cost){return proQuickFloorOf(cost);}
 function proNegotiateRows(view){
   const rows=view.result.results||[];
   if(!rows.length)return '<div class="live-error">لا توجد أنواع غرف معرّفة.</div>';
@@ -2945,8 +2981,19 @@ function proDrawShareCard(view){
     };
     const logo=new Image();
     logo.onload=()=>{
-      const h=92,w=logo.width/logo.height*h;
-      ctx.drawImage(logo,pad,44,w,h);
+      // The logo artwork is dark on transparency, so it needs a light panel under it or it
+      // disappears into the maroon header.
+      const h=88,w=logo.width/logo.height*h,inset=18;
+      const panelW=w+inset*2,panelH=h+inset*2,x=pad,y=36,r=18;
+      ctx.fillStyle=surface;
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);
+      ctx.lineTo(x+panelW-r,y);ctx.quadraticCurveTo(x+panelW,y,x+panelW,y+r);
+      ctx.lineTo(x+panelW,y+panelH-r);ctx.quadraticCurveTo(x+panelW,y+panelH,x+panelW-r,y+panelH);
+      ctx.lineTo(x+r,y+panelH);ctx.quadraticCurveTo(x,y+panelH,x,y+panelH-r);
+      ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);
+      ctx.closePath();ctx.fill();
+      ctx.drawImage(logo,x+inset,y+inset,w,h);
       body();
     };
     logo.onerror=body;
@@ -2965,6 +3012,19 @@ async function proShareCard(){
 }
 
 /* ---- quick pricing actions ---- */
+/* Negotiated prices are per draft. Opening one restores its own, and a new quote starts clean,
+   so a price agreed with one customer can never appear in another customer's quote. */
+function proRestoreNegotiation(row){
+  proQuickExtra.sells={};
+  try{
+    const saved=JSON.parse(row?.notes||'{}');
+    if(saved&&typeof saved==='object'){
+      proQuickExtra.sells=saved.sells&&typeof saved.sells==='object'?{...saved.sells}:{};
+      if(saved.floorMode==='fixed'||saved.floorMode==='percent')proQuickExtra.floorMode=saved.floorMode;
+      if(Number.isFinite(saved.floorValue))proQuickExtra.floorValue=saved.floorValue;
+    }
+  }catch(e){proQuickExtra.sells={};}
+}
 function proQuickHandle2(own){
   switch(own.dataset.pro){
     case'preset':{
@@ -3005,15 +3065,25 @@ function proQuickHandle2(own){
     }
     case'quick-customer':
       proQuickExtra.customer=!proQuickExtra.customer;proQuickPage();return true;
+    case'quick-more':{
+      const row=own.closest('.quick-actions');
+      const open=row.classList.toggle('show-all');
+      own.textContent=open?'إخفاء الإجراءات':'المزيد من الإجراءات';
+      return true;
+    }
     case'quick-card':
       proShareCard();return true;
+    case'floor-mode':
+      proQuickExtra.floorMode=own.dataset.value;
+      proQuickExtra.floorValue=own.dataset.value==='fixed'?200:8;
+      proQuickPage();return true;
   }
   return false;
 }
 const proQuickBaseHandle=proHandleAction;
 proHandleAction=function(own){if(proQuickHandle2(own))return;return proQuickBaseHandle(own);};
 document.addEventListener('input',event=>{
-  if(event.target.id==='quick-floor'){proQuickExtra.floorPct=Math.max(0,Number(event.target.value)||0);proQuickRender();return;}
+  if(event.target.id==='quick-floor'){proQuickExtra.floorValue=Math.max(0,Number(event.target.value)||0);proQuickRender();return;}
   const index=event.target.dataset&&event.target.dataset.neg;
   if(index!=null){proQuickExtra.sells[index]=Number(event.target.value)||0;proQuickRender();}
 },true);
@@ -3101,6 +3171,127 @@ ve=function(){
     const id=trigger?.dataset.id;
     if(!id||row.querySelector('[data-action="quote.delete"]'))return;
     trigger.insertAdjacentHTML('afterend',l('حذف','quote.delete',id,'small danger'));
+  });
+  proUpgradeActions();
+};
+
+/* ===== Release 6 ===== Merge the saved record instead of reloading everything. */
+const proR6={after:N,observe:proObserveApi};
+let proLastSave=null;
+/* Which boot list each save writes into. Anything absent falls back to a full reload, and the
+   three below are excluded on purpose because one call changes many records at once. */
+const proMergeTargets={
+  'definition.save':'definitions','company.save':'companies','user.save':'users',
+  'pricing.save':'pricings','offer.save':'offers','offer.approve':'offers','offer.archive':'offers',
+  'quote.save':'quotes','quote.archive':'quotes','settings.save':'settings',
+  'company.pricing.save':'companyPricings','company.pricing.archive':'companyPricings',
+  'assignment.toggle':'assignments'
+};
+const proFullReloadActions=['publish.commit','definition.import','account.password'];
+proObserveApi=function(action,data){
+  if(proMergeTargets[action]&&!proFullReloadActions.includes(action))proLastSave={action,data};
+  return proR6.observe(action,data);
+};
+N=async function(message){
+  const save=proLastSave;proLastSave=null;
+  const table=save&&proMergeTargets[save.action];
+  if(!table||!save.data)return proR6.after(message);
+  if(table!=='settings'&&!save.data.id)return proR6.after(message);
+  oe();
+  if(table==='settings')s.boot.settings={...s.boot.settings,...save.data};
+  else{
+    const list=(s.boot[table]||[]).slice();
+    const index=list.findIndex(row=>row.id===save.data.id);
+    if(index>=0)list[index]=save.data;else list.unshift(save.data);
+    s.boot[table]=list;
+  }
+  gi();
+  q(message);
+};
+/* A visible saving state, and no second submit while the first is still in flight. */
+document.addEventListener('submit',event=>{
+  const button=event.target.querySelector('[type=submit]');
+  if(!button||button.dataset.proBusy)return;
+  const label=button.textContent;
+  button.dataset.proBusy='1';
+  button.textContent='جارٍ الحفظ…';
+  button.classList.add('is-busy');
+  const restore=()=>{
+    button.textContent=label;
+    button.classList.remove('is-busy');
+    delete button.dataset.proBusy;
+  };
+  setTimeout(function check(){
+    if(button.disabled){setTimeout(check,60);return;}
+    restore();
+  },60);
+},true);
+
+/* ---- extras summary, negotiation persistence, floor as percent or amount ---- */
+function proQuickExtrasSummary(){
+  const summary=d('#quick-extra-sum'),total=d('#quick-extra-total'),details=d('.quick-extra');
+  if(!summary)return;
+  const input=proQuickInput();
+  const usd=input.usdToLyd||4.85;
+  const parts=[];
+  if(input.visaUsd)parts.push('تأشيرة');
+  if(input.ticketLyd)parts.push('تذكرة');
+  if(input.transportLyd)parts.push('نقل');
+  if(input.otherLyd)parts.push('أخرى');
+  if(input.extraBed)parts.push('سرير إضافي');
+  const value=input.visaUsd*usd+input.ticketLyd+input.transportLyd+input.otherLyd;
+  summary.textContent=parts.length?parts.join(' · ')+' · على كل فرد':'التأشيرة · التذكرة · النقل · أخرى';
+  if(total)total.textContent=value?'+'+ne(value)+' د.ل':'';
+  const label=details?.querySelector('.ex-label');
+  if(label)label.textContent=details.open?'طي التفاصيل':'إظهار التفاصيل';
+}
+document.addEventListener('toggle',event=>{
+  if(event.target.classList?.contains('quick-extra'))proQuickExtrasSummary();
+},true);
+const proR6Render=proQuickRender;
+proQuickRender=function(){proR6Render();proQuickExtrasSummary();};
+
+/* ---- deleting a definition: show what depends on it first ---- */
+const proR6Action=Ri;
+Ri=async function(action,id,el){
+  if(action==='definition.delete'){
+    const row=(s.boot.definitions||[]).find(x=>x.id===id);
+    if(!row)return;
+    const usage=await v('definition.usage',{id});
+    const links=[['تسعيرة',usage.pricings],['مسودة سريعة',usage.quickDrafts],['عرض',usage.offers],['تخصيص شركة',usage.assignments]].filter(([,count])=>count>0);
+    const body=links.length
+      ? `<div class="usage-warn"><p><b>${c(row.name)}</b> مرتبط بـ:</p><ul>${links.map(([label,count])=>`<li>${count} ${c(label)}</li>`).join('')}</ul><p class="hint">السجلات القائمة لن تتأثر — كل تسعيرة وكل عرض يحفظ لقطة من تعريفاته وأسعاره وقت إنشائه. الأثر الوحيد أن هذا التعريف سيختفي من التسعيرات حين تفتحها للتعديل لاحقاً.</p></div>`
+      : `<p class="hint">لا توجد سجلات مرتبطة بـ <b>${c(row.name)}</b>. الحذف آمن.</p>`;
+    D('حذف التعريف',body+`<div class="form-actions">${l('إلغاء','dialog.close')}${l('تعطيل بدل الحذف','definition.disable',id)}${l('حذف نهائياً','definition.delete.confirm',id,'danger')}</div>`);
+    return;
+  }
+  if(action==='definition.delete.confirm'){
+    const row=(s.boot.definitions||[]).find(x=>x.id===id);
+    if(!row)return;
+    await v('definition.delete',{id,version:row.version});
+    s.boot.definitions=(s.boot.definitions||[]).filter(x=>x.id!==id);
+    oe();gi();q('حُذف التعريف «'+row.name+'».');
+    return;
+  }
+  if(action==='definition.disable'){
+    const row=(s.boot.definitions||[]).find(x=>x.id===id);
+    if(!row)return;
+    const saved=await v('definition.save',{...row,active:false});
+    s.boot.definitions=(s.boot.definitions||[]).map(x=>x.id===id?saved:x);
+    oe();gi();q('عُطّل التعريف «'+row.name+'». السجلات المرتبطة سليمة.');
+    return;
+  }
+  return proR6Action(action,id,el);
+};
+const proR6List=ve;
+ve=function(){
+  proR6List();
+  if(s.tab!=='definitions'||!L('editDefinitions'))return;
+  x('#list-results tbody tr').forEach(row=>{
+    const trigger=row.querySelector('[data-action="definition.edit"]');
+    const id=trigger?.dataset.id;
+    if(!id||row.querySelector('[data-action="definition.delete"]'))return;
+    trigger.insertAdjacentHTML('afterend',l('حذف','definition.delete',id,'small danger'));
   });
   proUpgradeActions();
 };
