@@ -1536,8 +1536,9 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
 .quick-card.lead strong{font-size:2rem}
 .quick-card.below{border-color:var(--red)}
 .quick-card.below small{color:var(--red)}
-.quick-actions{display:flex;gap:9px;margin-top:12px}
-.quick-actions .btn{flex:1;margin:0}
+.quick-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+.quick-actions .btn{min-width:0;min-height:46px;white-space:normal;overflow-wrap:anywhere;margin:0}
+.quick-actions [data-pro="quick-card"]{grid-column:1/-1;grid-row:1}
 .quick-layout.mode-compact .quick-card strong{font-size:1.18rem}
 .quick-layout.mode-compact .quick-card.lead strong{font-size:1.35rem}
 .quick-layout.mode-compact .quick-card{padding:9px 12px;margin-bottom:6px}
@@ -1563,7 +1564,7 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
  .quick-modes{display:flex;width:100%}
  .quick-modes button{flex:1;padding:9px 6px}
  .quick-card.lead strong{font-size:1.75rem}
- .quick-actions{position:sticky;bottom:0;background:#fffffff5;backdrop-filter:blur(10px);padding:10px 0;margin:0}
+ .quick-actions{position:static;padding:12px 0 0;margin:0}
  .switch-group{padding:11px 12px}
 }
 
@@ -1639,6 +1640,37 @@ body{background:var(--bg)}button,input,select,textarea{font-size:1rem}label,.nav
  .quick-shortcut{padding:7px 11px;font-size:.78rem;margin-inline-start:8px}
  .cust-row b{font-size:1.3rem}
 }
+
+/* Release 6: quick pricing fits the viewport without hiding overflowing content. */
+.quick-inputs,.quick-results,.quick-strip,.hotel-card,.quick-two>*,.neg-head>*{min-width:0}
+.quick-inputs input,.quick-inputs select,.floor-controls>*{width:100%;min-width:0;max-width:100%}
+.quick-extra>summary{justify-content:space-between;gap:12px;flex-wrap:wrap;min-height:46px;list-style:none}
+.quick-extra>summary::-webkit-details-marker{display:none}
+.quick-extra>summary:focus-visible{outline:3px solid var(--gold);outline-offset:5px;border-radius:5px}
+.quick-extra-toggle{display:inline-flex;align-items:center;gap:9px;color:var(--teal);font-size:.8rem;font-weight:700;background:#f1e6eb;border-radius:7px;padding:5px 10px;margin-inline-start:auto}
+.quick-extra-chevron{font-size:1.2rem;line-height:1;transition:transform .15s}
+.quick-extra:not([open]) .when-open,.quick-extra[open] .when-closed{display:none}
+.quick-extra[open] .quick-extra-chevron{transform:rotate(180deg)}
+.floor-title{width:100%;margin:0;font-weight:700}
+.floor-controls{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(80px,1fr);width:100%;gap:8px;align-items:center}
+.floor-controls input{width:100%;min-height:46px}
+.floor-line>small{width:100%;line-height:1.7}
+.floor-line .chips-inline{width:100%;margin:0}
+@media(max-width:1000px){.quick-layout{grid-template-columns:minmax(0,1fr)}.quick-results{position:static}}
+@media(max-width:760px){
+ .quick-two{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .quick-inputs{padding:12px}.hotel-card{padding:12px}
+ .quick-extra{padding:10px 12px}
+ .hotel-card-head{align-items:flex-start;flex-wrap:wrap}
+ .neg-head{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .neg-name,.neg-profit,.cust-row>*{overflow-wrap:anywhere;min-width:0}
+ .cust-row{gap:12px;flex-wrap:wrap}
+ .chips-inline .chip{min-height:44px;flex:1 1 55px}
+ .quick-results .btn{font-size:.88rem}
+ .topbar{flex-wrap:wrap;gap:8px}.topbar .user-chip{min-width:0;flex-wrap:wrap}
+}
+@media(max-width:380px){.quick-two{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.quick-extra-chevron{transition:none}}
 </style><!-- Tajawal font license
 Copyright 2018 Boutros International. (http://www.boutrosfonts.com)
 
@@ -2584,7 +2616,7 @@ function proQuickForm(){
     <div class="quick-two">${y('طريقة الربح','q-profitType',[['percent','نسبة %'],['fixed','مبلغ ثابت']],v('profitType','percent'))}${m('قيمة الربح','q-profitValue',v('profitValue',15))}</div>
   </div>
   <details class="quick-extra" data-step="2" ${draft.visaUsd||draft.ticketLyd||draft.transportLyd||draft.otherLyd?'open':''}>
-    <summary>تكاليف إضافية · التأشيرة والتذكرة والنقل</summary>
+    <summary><span>تكاليف إضافية · التأشيرة والتذكرة والنقل</span><span class="quick-extra-toggle"><span class="when-closed">إظهار التفاصيل</span><span class="when-open">طيّ التفاصيل</span><span class="quick-extra-chevron" aria-hidden="true">⌄</span></span></summary>
     <div class="quick-extra-body">
       ${m('سرير إضافي (SAR)','q-extraBed',v('extraBed',0))}
       <div class="quick-two">${m('التأشيرة (USD)','q-visaUsd',v('visaUsd',0))}${m('التذكرة (LYD)','q-ticketLyd',v('ticketLyd',0))}</div>
@@ -2609,10 +2641,17 @@ function proQuickRender(){
   try{view=proQuickCompute();}catch(e){error=e.message||String(e);}
   const prices=d('#quick-prices');
   if(prices){
+    const active=prices.contains(document.activeElement)&&document.activeElement.matches('[data-neg]')?document.activeElement:null;
     prices.innerHTML=!view?`<div class="live-error">${c(error)}</div>`
       :proQuickExtra.customer?proCustomerRows(view)
       :proQuickState.mode==='negotiate'?proNegotiateRows(view)
       :proQuickPrices(view);
+    // Reuse the live number field: rebuilding each row otherwise drops the phone keyboard
+    // after the first digit and resets partially typed decimal values.
+    if(active){
+      const replacement=prices.querySelector('[data-neg="'+active.dataset.neg+'"]');
+      if(replacement){replacement.replaceWith(active);active.focus({preventScroll:true});}
+    }
   }
   const copy=d('#quick-copy');
   if(copy)copy.disabled=!view;
@@ -2650,7 +2689,7 @@ function proQuickPage(){
     <div class="quick-inputs panel"><div id="quick-step-head" class="step-head" hidden></div><form id="quick-form" autocomplete="off">${proQuickForm()}</form><div id="quick-nav" class="step-nav"></div></div>
     <div class="quick-results">
       <div id="quick-prices"></div>
-      ${proQuickState.mode==='negotiate'&&!proQuickExtra.customer?`<div class="floor-line">لا أقبل ربحاً أقل من <input type="number" id="quick-floor" value="${proQuickExtra.floorPct}" min="0" max="100" step="1" aria-label="أقل ربح مقبول"> ٪ <span class="chips-inline">${[['pct',5],['pct',10],['amt',100],['amt',250]].map(([kind,value])=>`<button type="button" class="chip" data-pro="quick-discount" data-kind="${kind}" data-value="${value}">${kind==='pct'?value+'٪':'−'+value}</button>`).join('')}<button type="button" class="chip" data-pro="quick-discount" data-kind="reset" data-value="0">إرجاع</button></span></div>`:''}
+      ${proQuickState.mode==='negotiate'&&!proQuickExtra.customer?`<div class="floor-line"><label for="quick-floor" class="floor-title">لا أقبل ربحاً أقل من</label><div class="floor-controls"><select id="quick-floor-type" aria-label="طريقة الحد الأدنى للربح">${proOptions([['percent','نسبة من التكلفة ٪'],['fixed','مبلغ للفرد (د.ل)']],proQuickExtra.floorType)}</select><input type="number" id="quick-floor" value="${proQuickExtra.floorType==='fixed'?proQuickExtra.floorAmount:proQuickExtra.floorPct}" min="0" max="1000000000" step="0.01" inputmode="decimal" aria-label="أقل ربح مقبول" aria-describedby="quick-floor-hint"></div><small id="quick-floor-hint">${proQuickExtra.floorType==='fixed'?'ربح ثابت لكل فرد بالدينار الليبي':'نسبة ربح من تكلفة الفرد'} · يظهر تنبيه عند النزول عن الحد.</small><span class="chips-inline" role="group" aria-label="تخفيض سعر البيع">${[['pct',5],['pct',10],['amt',100],['amt',250]].map(([kind,value])=>`<button type="button" class="chip" data-pro="quick-discount" data-kind="${kind}" data-value="${value}">${kind==='pct'?value+'٪':'−'+value}</button>`).join('')}<button type="button" class="chip" data-pro="quick-discount" data-kind="reset" data-value="0">إرجاع</button></span></div>`:''}
       <div class="quick-actions">
         <button type="button" class="btn" id="quick-copy" data-pro="quick-copy">نسخ نصاً</button>
         <button type="button" class="btn primary" data-pro="quick-card">بطاقة مشاركة</button>
@@ -2830,7 +2869,7 @@ document.addEventListener('input',event=>{
 },true);
 
 /* ---- quick pricing: presets, negotiation, customer view, share card ---- */
-const proQuickExtra={floorPct:8,sells:{},customer:false,card:false};
+const proQuickExtra={floorType:'percent',floorPct:8,floorAmount:100,sells:{},customer:false,card:false};
 function proQuickPresets(){
   try{return JSON.parse(localStorage.getItem('rihla_presets')||'[]');}catch(e){return [];}
 }
@@ -2849,7 +2888,10 @@ function proPresetsMarkup(){
   const presets=proQuickPresets();
   return `<div class="preset-row">${presets.map((preset,index)=>`<button type="button" class="preset" data-pro="preset" data-value="${index}"><b>${c(preset.name)}</b><small>${preset.input.makkahNights||0} ليالٍ${preset.input.madinahNights?' + '+preset.input.madinahNights+' بالمدينة':''} · ربح ${preset.input.profitValue||0}${preset.input.profitType==='fixed'?'':'٪'}</small><span class="num">من ${ne(proPresetPrice(preset))}</span><i data-pro="preset-remove" data-value="${index}" role="button" tabindex="0" aria-label="حذف القالب ${c(preset.name)}">✕</i></button>`).join('')}<button type="button" class="preset preset-add" data-pro="preset-save">＋ احفظ الإعداد الحالي كقالب</button></div>`;
 }
-function proQuickFloor(cost){return Math.ceil(cost*(1+proQuickExtra.floorPct/100)/5)*5;}
+function proQuickFloor(cost){
+  const profit=proQuickExtra.floorType==='fixed'?proQuickExtra.floorAmount:cost*proQuickExtra.floorPct/100;
+  return Math.ceil((cost+profit)/5)*5;
+}
 function proNegotiateRows(view){
   const rows=view.result.results||[];
   if(!rows.length)return '<div class="live-error">لا توجد أنواع غرف معرّفة.</div>';
@@ -2918,10 +2960,10 @@ function proDrawShareCard(view){
       ctx.direction='rtl';ctx.textAlign='right';
       ctx.fillStyle=surface;
       ctx.font='700 46px Tajawal, Tahoma, sans-serif';
-      ctx.fillText(s.boot?.settings?.name||'أركان مكة للخدمات السياحية',W-pad,headH-120);
+      ctx.fillText(s.boot?.settings?.name||'أركان مكة للخدمات السياحية',W-pad,headH-100,W-pad*2);
       ctx.font='400 30px Tajawal, Tahoma, sans-serif';
       ctx.globalAlpha=.85;
-      ctx.fillText(proShareSubtitle()||'عرض أسعار',W-pad,headH-64);
+      ctx.fillText(proShareSubtitle()||'عرض أسعار',W-pad,headH-42,W-pad*2);
       ctx.globalAlpha=1;
       lines.forEach((line,index)=>{
         const y=headH+40+rowH*index;
@@ -2946,7 +2988,10 @@ function proDrawShareCard(view){
     };
     const logo=new Image();
     logo.onload=()=>{
-      const h=92,w=logo.width/logo.height*h;
+      const scale=Math.min(380/logo.width,92/logo.height),w=logo.width*scale,h=logo.height*scale;
+      // The original dark logo has transparent pixels; give it an opaque white backing
+      // inside the exported image, not merely on the preview page.
+      ctx.fillStyle='#ffffff';ctx.fillRect(pad-16,28,w+32,124);
       ctx.drawImage(logo,pad,44,w,h);
       body();
     };
@@ -2957,6 +3002,7 @@ function proDrawShareCard(view){
 async function proShareCard(){
   let view=null;
   try{view=proQuickCompute();}catch(e){q('أكمل المدخلات أولاً.');return;}
+  if(document.fonts)await Promise.all([document.fonts.load('700 46px Tajawal'),document.fonts.load('400 30px Tajawal')]).catch(()=>{});
   const {blob,url}=await proDrawShareCard(view);
   const file=blob?new File([blob],'arkan-prices.png',{type:'image/png'}):null;
   if(file&&navigator.canShare&&navigator.canShare({files:[file]})){
@@ -3014,10 +3060,22 @@ function proQuickHandle2(own){
 const proQuickBaseHandle=proHandleAction;
 proHandleAction=function(own){if(proQuickHandle2(own))return;return proQuickBaseHandle(own);};
 document.addEventListener('input',event=>{
-  if(event.target.id==='quick-floor'){proQuickExtra.floorPct=Math.max(0,Number(event.target.value)||0);proQuickRender();return;}
+  if(event.target.id==='quick-floor'){
+    const value=Number(event.target.value);
+    if(!Number.isFinite(value)||value<0||value>1e9)return;
+    proQuickExtra[proQuickExtra.floorType==='fixed'?'floorAmount':'floorPct']=value;
+    proQuickRender();return;
+  }
   const index=event.target.dataset&&event.target.dataset.neg;
   if(index!=null){proQuickExtra.sells[index]=Number(event.target.value)||0;proQuickRender();}
 },true);
+document.addEventListener('change',event=>{
+  if(event.target.id!=='quick-floor-type')return;
+  proQuickExtra.floorType=event.target.value==='fixed'?'fixed':'percent';
+  d('#quick-floor').value=proQuickExtra.floorType==='fixed'?proQuickExtra.floorAmount:proQuickExtra.floorPct;
+  d('#quick-floor-hint').textContent=(proQuickExtra.floorType==='fixed'?'ربح ثابت لكل فرد بالدينار الليبي':'نسبة ربح من تكلفة الفرد')+' · يظهر تنبيه عند النزول عن الحد.';
+  proQuickRender();
+});
 const proQuickBaseAction=Ri;
 Ri=async function(action,id,el){
   if(action==='quick.promote'){
